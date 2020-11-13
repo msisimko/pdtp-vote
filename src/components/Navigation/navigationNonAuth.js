@@ -89,7 +89,7 @@ class NavigationNonAuth extends Component {
                 <MenuIcon />
               </IconButton>
             </Hidden>
-            <Typography variant="h6" className={classes.title}>React App</Typography>
+            <Typography variant="h6" className={classes.title}>PDTP Kura</Typography>
             <IconButton onClick={this.toggleTheme} color="inherit" aria-label="Toggle Theme">
               {theme === 'light' ? <Brightness4Icon /> : <BrightnessHighIcon />}
             </IconButton>
