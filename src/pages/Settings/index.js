@@ -3,7 +3,6 @@ import { compose } from 'recompose';
 
 import UpdateEmail from './UpdateEmail';
 import UpdatePassword from './UpdatePassword';
-import UpdateProfile from './UpdateProfile';
 
 import Separator from '../../components/Separator';
 import { Main as Sidebar } from '../../components/Sidebar';
@@ -29,15 +28,6 @@ class SettingsBase extends Component {
               <Typography align="center" variant="body2" gutterBottom>
                 This page is only accessible to logged in users.
               </Typography>
-            </Box>
-          </Paper>
-
-          <Separator />
-          
-          {/* Update profile form */}
-          <Paper elevation={0} square>
-            <Box p={3}>
-              <UpdateProfile />
             </Box>
           </Paper>
 
@@ -79,4 +69,4 @@ const Settings = compose(
 
 export default Settings;
 
-export { UpdateEmail, UpdatePassword, UpdateProfile };
+export { UpdateEmail, UpdatePassword };
