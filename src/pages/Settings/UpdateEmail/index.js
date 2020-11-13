@@ -50,7 +50,7 @@ class UpdateEmailBase extends Component {
         return this.props.firebase.doSendEmailVerification();
       })
       .then(() => {
-        enqueueSnackbar("Your email has been updated. Check inbox for verification email.", { variant: 'success', onClose: this.handleClose });
+        enqueueSnackbar("Your email has been updated. Check inbox for a verification email.", { variant: 'success', onClose: this.handleClose });
       })
       .catch(error => {
         enqueueSnackbar(error.message, { variant: 'error'});

@@ -60,7 +60,7 @@ class RecoverEmail extends Component {
 
             {success &&
               <Typography align="center" variant="body2" gutterBottom>
-                The request to change your email address has successfully been revoked.
+                The request to change your email address has been revoked successfully.
               </Typography>
             }
 

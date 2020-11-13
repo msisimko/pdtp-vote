@@ -57,7 +57,7 @@ class VerifyEmail extends Component {
 
             {success &&
               <Typography align="center" variant="body2" gutterBottom>
-                Your email has successfully been verified.
+                Your email has been verified successfully.
               </Typography>
             }
 
