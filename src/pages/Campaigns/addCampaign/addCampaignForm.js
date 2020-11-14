@@ -4,6 +4,8 @@ import { compose } from 'recompose';
 import Separator from '../../../components/Separator';
 
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -36,8 +38,7 @@ const INITIAL_STATE = {
   bidSubmissionCloseDateTime: null,               // When is the deadline for submitting bids?
   votingOpenDateTime: null,                       // When do polls open?
   votingCloseDateTime: null,                      // When do polls close?
-  status: 2,                                      // Status { 0 - completed, 1 - ongoing, 2 - upcoming }
-  // featured: false,                                // Featured on homepage? { false -no, true - yes }
+  featured: false,                                // Featured on homepage? { false -no, true - yes }
   disabled: false,
 }
 
@@ -50,6 +51,7 @@ class AddCampaignFormBase extends Component {
     this.state = { ...INITIAL_STATE };
 
     this.onChange = this.onChange.bind(this);
+    this.handleChecked = this.handleChecked.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleSuccess = this.handleSuccess.bind(this);
     this.handleError = this.handleError.bind(this);
@@ -66,10 +68,14 @@ class AddCampaignFormBase extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  handleChecked(event){
+    this.setState({ [event.target.name]: event.target.checked });
+  };
+
   onSubmit(event) {
     const { enqueueSnackbar } = this.props;
 
-    const { title, description, campaignStartDateTime, campaignStopDateTime, bidSubmissionOpenDateTime, bidSubmissionCloseDateTime, votingOpenDateTime, votingCloseDateTime, status } = this.state;
+    const { title, description, campaignStartDateTime, campaignStopDateTime, bidSubmissionOpenDateTime, bidSubmissionCloseDateTime, votingOpenDateTime, votingCloseDateTime, featured } = this.state;
 
     const authUser = this.context;
 
@@ -86,7 +92,7 @@ class AddCampaignFormBase extends Component {
         bidSubmissionCloseDateTime: bidSubmissionCloseDateTime.toISO(),
         votingOpenDateTime: votingOpenDateTime.toISO(),
         votingCloseDateTime: votingCloseDateTime.toISO(),
-        status,
+        featured,
         createdOn: this.props.firebase.getServerTimestamp(),
         createdBy: authUser.uid,
         createdByName: authUser.displayName,
@@ -120,7 +126,7 @@ class AddCampaignFormBase extends Component {
   render() {
     const { classes } = this.props;
 
-    const { title, description, campaignStartDateTime, campaignStopDateTime, bidSubmissionOpenDateTime, bidSubmissionCloseDateTime, votingOpenDateTime, votingCloseDateTime, disabled } = this.state;
+    const { title, description, campaignStartDateTime, campaignStopDateTime, bidSubmissionOpenDateTime, bidSubmissionCloseDateTime, votingOpenDateTime, votingCloseDateTime, featured, disabled } = this.state;
 
     const disableButton = title === '' ||
                           campaignStartDateTime === null ||
@@ -294,7 +300,30 @@ class AddCampaignFormBase extends Component {
             />
           </Grid>
         </Grid>
-          
+
+        <Separator />
+
+        <Typography variant="body2" gutterBottom>
+          <strong>Miscellaneous</strong>
+        </Typography>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={featured}
+                  onChange={(e) => this.handleChecked(e)}
+                  name="featured"
+                  color="primary"
+                />
+              }
+              label="Feature this Election Campaign on the Homepage"
+              disabled={disabled}
+            />
+          </Grid>
+        </Grid>
+
         <Button
           className={classes.submit}
           color="primary"
