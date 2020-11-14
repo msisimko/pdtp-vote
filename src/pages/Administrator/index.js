@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 
-// Import components here
+import ManageElections from './ManageElections';
 
 import Separator from '../../components/Separator';
 import { Main as Sidebar } from '../../components/Sidebar';
@@ -40,7 +40,7 @@ class AdministratorBase extends Component {
             </Box>
           </Paper>
             
-          {/* List imported components here */}
+          <ManageElections />
 
         </Grid>
         <Grid item md={4} xs={12}>
