@@ -7,6 +7,7 @@ import Separator from './components/Separator';
 
 import Account from './pages/Account';
 import Action from './pages/Action';
+import Administrator from './pages/Administrator';
 import Bid from './pages/Bid';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
@@ -161,6 +162,7 @@ class AppBase extends Component {
                 <Container maxWidth="md" disableGutters>
                   <Route path={ROUTES.ACCOUNT} component={Account} />
                   <Route path={ROUTES.ACTION} component={Action} />
+                  <Route path={ROUTES.ADMINISTRATOR} component={Administrator} />
                   <Route path={ROUTES.BID} component={Bid} />
                   <Route path={ROUTES.HOME} component={Home} />
                   <Route exact path={ROUTES.LANDING} component={Landing} />
