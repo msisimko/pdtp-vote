@@ -71,7 +71,7 @@ class ListElectionsBase extends Component {
     const { enqueueSnackbar } = this.props;
 
     this.props.firebase
-      .elections(election.id)
+      .election(election.id)
       .delete()
       .then(() => {
         enqueueSnackbar(`${election.title} has been deleted successfully.`, { variant: 'success' });
