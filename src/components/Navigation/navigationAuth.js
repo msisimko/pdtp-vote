@@ -114,6 +114,9 @@ class NavigationAuthBase extends Component {
                 <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.HOME} activeClassName="Mui-selected" aria-label="Home">
                   <ListItemText primary="Home" />
                 </ListItem>
+                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.BID} activeClassName="Mui-selected" aria-label="Submit Bid">
+                  <ListItemText primary="Submit Bid" />
+                </ListItem>
                 <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ACCOUNT} activeClassName="Mui-selected" aria-label="Account">
                   <ListItemText primary="Account" />
                 </ListItem>
@@ -131,6 +134,9 @@ class NavigationAuthBase extends Component {
               <List component="nav" subheader={<ListSubheader color="inherit" disableSticky={true}>Menu</ListSubheader>}>
                 <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.HOME} activeClassName="Mui-selected" aria-label="Home">
                   <ListItemText primary="Home" />
+                </ListItem>
+                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.BID} activeClassName="Mui-selected" aria-label="Submit Bid">
+                  <ListItemText primary="Submit Bid" />
                 </ListItem>
                 <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ACCOUNT} activeClassName="Mui-selected" aria-label="Account">
                   <ListItemText primary="Account" />
