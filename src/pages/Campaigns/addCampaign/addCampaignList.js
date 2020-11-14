@@ -15,8 +15,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import AdjustIcon from '@material-ui/icons/Adjust';
-import AvTimerIcon from '@material-ui/icons/AvTimer';
+import LabelIcon from '@material-ui/icons/Label';
+import LabelImportantIcon from '@material-ui/icons/LabelImportant';
+import LabelOffIcon from '@material-ui/icons/LabelOff';
 
 import { withSnackbar } from 'notistack';
  
@@ -53,7 +54,7 @@ class AddCampaignListBase extends Component {
                       .onSnapshot((querySnapshot) => {
                         let allElections = [];
                         querySnapshot.forEach((doc) => {
-                          allElections.push({ id: doc.id, title: doc.data().title, status: doc.data().status, createdBy: doc.data().createdBy });
+                          allElections.push({ id: doc.id, title: doc.data().title, featured: doc.data().featured, createdBy: doc.data().createdBy });
                         });
                         this.setState({ allElections });
                       });
@@ -102,34 +103,37 @@ class AddCampaignListBase extends Component {
                     <caption>A list of the 10 most recent Election Campaigns. </caption>
                     <TableHead>
                       <TableRow>
-                        <TableCell colSpan={3}>Campaign Title</TableCell>
+                        <TableCell>
+                          <Tooltip title="Homepage Status">
+                            <IconButton aria-label="Homepage Status">
+                                <LabelImportantIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                        <TableCell colSpan={2}>Campaign Title</TableCell>
                       </TableRow>
                     </TableHead>
 
                     <TableBody>
                       {allElections.map((election) => (
                         <TableRow key={election.id} hover>
-                          <TableCell>
-                            {election.title}
-                          </TableCell>
                           <TableCell component="th" scope="row">
-                            {election.status === 1 ?  (
-                              <Tooltip title="Ongoing">
-                                <IconButton aria-label="Ongoing">
-                                  <Box color="success.main">
-                                    <AdjustIcon fontSize="small" />
-                                  </Box>
+                            {election.featured ? (
+                              <Tooltip title="Featured">
+                                <IconButton aria-label="Featured">
+                                  <LabelIcon />
                                 </IconButton>
                               </Tooltip>
                             ) : (
-                              <Tooltip title="Upcoming">
-                                <IconButton aria-label="Upcoming">
-                                  <Box color="warning.main">
-                                    <AvTimerIcon fontSize="small" />
-                                  </Box>
+                              <Tooltip title="Not Featured">
+                                <IconButton aria-label="Not Featured">
+                                    <LabelOffIcon />
                                 </IconButton>
                               </Tooltip>
                             )}
+                          </TableCell>
+                          <TableCell>
+                            {election.title}
                           </TableCell>
                           <TableCell align="right">
                             <Button size="small" onClick={() => this.handleDelete(election)} disabled={authUser.uid !== election.createdBy}>Delete</Button>
