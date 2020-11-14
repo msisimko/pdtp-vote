@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 
+// Imported from Campaigns page
 import AddCampaign from '../Campaigns/addCampaign';
 
 import Separator from '../../components/Separator';
