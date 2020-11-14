@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import PasswordForgetForm from './passwordForgetForm';
 import PasswordForgetLink from './passwordForgetLink';
@@ -17,7 +17,7 @@ import { AuthUserContext } from '../../session';
 
 import * as ROUTES from '../../constants/routes';
 
-class PasswordForget extends React.Component {
+class PasswordForget extends Component {
   static contextType = AuthUserContext;
   
   componentDidMount() {
