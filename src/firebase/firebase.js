@@ -65,6 +65,9 @@ class Firebase {
   
   // *** Firestore API ***
   
+  elections = () => this.db.collection('elections');
+
+  election = id => this.db.collection('elections').doc(id);
 }
 
 export default Firebase;
