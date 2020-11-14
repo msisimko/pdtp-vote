@@ -2,6 +2,7 @@ export const ACCOUNT = '/account';
 export const ACTION = '/action';
 export const ADMINISTRATOR = '/administrator';
 export const BID = '/bid';
+export const CAMPAIGNS = '/campaigns';
 export const HOME = '/home';
 export const LANDING = '/';
 export const PASSWORD_FORGET = '/pw-forget';

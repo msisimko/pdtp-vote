@@ -37,10 +37,11 @@ const INITIAL_STATE = {
   votingOpenDateTime: null,                       // When do polls open?
   votingCloseDateTime: null,                      // When do polls close?
   status: 2,                                      // Status { 0 - completed, 1 - ongoing, 2 - upcoming }
+  // featured: false,                                // Featured on homepage? { false -no, true - yes }
   disabled: false,
 }
 
-class AddElectionsBase extends Component {
+class AddCampaignFormBase extends Component {
   static contextType = AuthUserContext;
 
   constructor(props) {
@@ -310,10 +311,10 @@ class AddElectionsBase extends Component {
   }
 }
 
-const AddElections = compose(
+const AddCampaignForm = compose(
   withStyles(styles, { withTheme: true }),
   withSnackbar,
   withFirebase,
-)(AddElectionsBase);
+)(AddCampaignFormBase);
 
-export default AddElections;
+export default AddCampaignForm;

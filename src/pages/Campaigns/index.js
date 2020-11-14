@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 
-import AddCampaign from '../Campaigns/addCampaign';
-
 import Separator from '../../components/Separator';
 import { Main as Sidebar } from '../../components/Sidebar';
 
@@ -13,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { withAuthorization, withEmailVerification } from '../../session';
 
-class AdministratorBase extends Component {
+class CampaignsBase extends Component {
   render() {
     return(
       <Grid container spacing={2}>
@@ -22,25 +20,17 @@ class AdministratorBase extends Component {
           <Paper elevation={0} square>
             <Box p={3}>
               <Typography align="center" variant="h4" gutterBottom>
-                <strong>Administrator</strong>
+                <strong>Election Campaigns</strong>
               </Typography>
               <Typography align="center" variant="body2" gutterBottom>
-                This page is only accessible to administrators.
+                This page is only accessible to logged in users.
               </Typography>
             </Box>
           </Paper>
 
           <Separator />
-
-          <Paper elevation={0} square>
-            <Box p={3}>
-              <Typography align="center" variant="h5" gutterBottom>
-                <strong>Application Settings</strong>
-              </Typography>
-            </Box>
-          </Paper>
             
-          <AddCampaign />
+          {/* List Election Campaigns from here */}
 
         </Grid>
         <Grid item md={4} xs={12}>
@@ -55,9 +45,9 @@ class AdministratorBase extends Component {
 
 const condition = authUser => !!authUser;
 
-const Administrator = compose(
+const Campaigns = compose(
   withAuthorization(condition),
   withEmailVerification,
-)(AdministratorBase);
+)(CampaignsBase);
 
-export default Administrator;
+export default Campaigns;

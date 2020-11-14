@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import AddElections from './addElections';
-import ListElections from './listElections';
+import AddCampaignForm from './addCampaignForm';
+import AddCampaignList from './addCampaignList';
 
 import Separator from '../../../components/Separator';
 
@@ -26,7 +26,7 @@ const styles = theme => ({
   },
 });
 
-class Counties extends Component {
+class AddCampaign extends Component {
   render() {
     const { classes } = this.props;
 
@@ -42,19 +42,19 @@ class Counties extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
 
-              <AddElections />
+              <AddCampaignForm />
 
               <Separator />
 
               <Box color="primary.main">
                 <Typography variant="overline" gutterBottom>
-                  <strong>List of Elections</strong>
+                  <strong>List of Election Campaigns</strong>
                 </Typography>
               </Box>
 
               <Separator />
 
-              <ListElections />
+              <AddCampaignList />
 
             </Grid>
           </Grid>
@@ -64,4 +64,6 @@ class Counties extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Counties);
+export default withStyles(styles, { withTheme: true })(AddCampaign);
+
+export { AddCampaignForm, AddCampaignList };

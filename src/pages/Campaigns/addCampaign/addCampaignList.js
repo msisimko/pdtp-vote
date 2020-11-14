@@ -34,7 +34,7 @@ const INITIAL_STATE = {
   allElections: [],
 }
 
-class ListElectionsBase extends Component {
+class AddCampaignListBase extends Component {
   static contextType = AuthUserContext;
 
   constructor(props) {
@@ -147,10 +147,10 @@ class ListElectionsBase extends Component {
   }
 }
 
-const ListElections = compose(
+const AddCampaignList = compose(
   withStyles(styles, { withTheme: true }),
   withSnackbar,
   withFirebase,
-)(ListElectionsBase);
+)(AddCampaignListBase);
 
-export default ListElections;
+export default AddCampaignList;
