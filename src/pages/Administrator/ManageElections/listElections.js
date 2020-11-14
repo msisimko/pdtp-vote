@@ -48,12 +48,8 @@ class ListElectionsBase extends Component {
   componentDidMount() {
     this.listener = this.props.firebase
                       .elections()
-                      .where('status', '>', 0)
-                      /**
-                       * FUTURE:  Perfom limiting & integrate pagination support
-                       *          in case there are too many Election Campaigns 
-                       *          to list in one instance e.g. over 20. 
-                       */
+                      .orderBy('createdOn', 'desc')
+                      .limit(10)
                       .onSnapshot((querySnapshot) => {
                         let allElections = [];
                         querySnapshot.forEach((doc) => {
@@ -103,7 +99,7 @@ class ListElectionsBase extends Component {
                   </TableBody>
                 ) : (
                   <React.Fragment>
-                    <caption>A list of all upcoming or ongoing Election Campaigns. </caption>
+                    <caption>A list of the 10 most recent Election Campaigns. </caption>
                     <TableHead>
                       <TableRow>
                         <TableCell colSpan={3}>Campaign Title</TableCell>
