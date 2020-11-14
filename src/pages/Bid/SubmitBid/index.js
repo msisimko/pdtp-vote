@@ -22,7 +22,7 @@ class SubmitBidBase extends Component {
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel-content" id="panel-header">
           <Box p={1}>
             <Typography style={{ flexBasis: '33.33%', flexShrink: 0 }} variant="h6">Eyeing a seat?</Typography>
-            <Typography style={{ color: theme.palette.text.secondary }} variant="subtitle1">Click here to get started with submitting your bid.</Typography>
+            <Typography style={{ color: theme.palette.text.secondary }} variant="subtitle1">Get started by submitting your bid.</Typography>
           </Box>
         </AccordionSummary>
         <AccordionDetails>
