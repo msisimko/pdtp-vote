@@ -49,6 +49,7 @@ const INITIAL_STATE = {
   votingOpenDateTime: null,                       // When do polls open?
   votingCloseDateTime: null,                      // When do polls close?
   featured: false,                                // Featured on homepage? { false -no, true - yes }
+  createdBy: '',                                  // Author ID
   disabled: true,
 }
 
@@ -86,6 +87,7 @@ class EditCampaignFormBase extends Component {
             bidSubmissionCloseDateTime: DateTime.fromISO(doc.data().bidSubmissionCloseDateTime),
             votingOpenDateTime: DateTime.fromISO(doc.data().votingOpenDateTime),
             votingCloseDateTime: DateTime.fromISO(doc.data().votingCloseDateTime),
+            createdBy: doc.data().createdBy,
             disabled: false,
           })
         }
@@ -182,7 +184,9 @@ class EditCampaignFormBase extends Component {
   render() {
     const { classes } = this.props;
 
-    const { title, description, campaignStartDateTime, campaignStopDateTime, bidSubmissionOpenDateTime, bidSubmissionCloseDateTime, votingOpenDateTime, votingCloseDateTime, featured, disabled } = this.state;
+    const { title, description, campaignStartDateTime, campaignStopDateTime, bidSubmissionOpenDateTime, bidSubmissionCloseDateTime, votingOpenDateTime, votingCloseDateTime, featured, createdBy, disabled } = this.state;
+    
+    const authUser = this.context;
 
     const disableButton = title === '' ||
                           campaignStartDateTime === null ||
@@ -400,7 +404,7 @@ class EditCampaignFormBase extends Component {
                   className={classes.delete}
                   color="secondary"
                   size="large"
-                  disabled={disabled || disableButton }
+                  disabled={disabled || disableButton || authUser.uid !== createdBy }
                   onClick={this.handleDelete}
                 >
                   Delete Campaign
