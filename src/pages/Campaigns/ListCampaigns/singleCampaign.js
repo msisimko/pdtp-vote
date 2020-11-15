@@ -14,11 +14,18 @@ import LabelOffIcon from '@material-ui/icons/LabelOff';
 
 import { DateTime } from "luxon";
 
+import { AuthUserContext } from '../../../session';
+
 import * as ROUTES from '../../../constants/routes';
+import * as ROLES from '../../../constants/roles';
 
 class SingleCampaign extends Component {
+  static contextType = AuthUserContext;
+
   render() {
     const{ campaign } = this.props;
+
+    const authUser = this.context;
 
     // Get current DateTime
     const now = DateTime.local()
@@ -95,6 +102,12 @@ class SingleCampaign extends Component {
             </TableCell>
           ) : (
             <TableCell />
+          )}
+          {/* Edit button */}
+          {!!authUser.roles[ROLES.ADMINISTRATOR] && (
+            <TableCell align="right">
+              <Button size="small" component={Link} to={`${ROUTES.CAMPAIGN_EDIT}/${campaign.id}`}>Edit</Button>
+            </TableCell>
           )}
         </TableRow>
       </React.Fragment>

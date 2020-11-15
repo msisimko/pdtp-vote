@@ -25,11 +25,17 @@ import { withSnackbar } from 'notistack';
  
 import { withFirebase } from '../../../firebase';
 
+import { AuthUserContext } from '../../../session';
+
+import * as ROLES from '../../../constants/roles';
+
 const INITIAL_STATE = {
   allCampaigns: [],
 }
 
 class ListCampaignsBase extends Component {
+  static contextType = AuthUserContext;
+
   constructor(props) {
     super(props);
  
@@ -73,6 +79,8 @@ class ListCampaignsBase extends Component {
   
   render() {
     const { allCampaigns } = this.state;
+
+    const authUser = this.context;
     
     return(
       <TableContainer component={Paper} elevation={0} square>
@@ -98,6 +106,10 @@ class ListCampaignsBase extends Component {
                   <TableCell>Campaign Status</TableCell>
                   {/* Action button */}
                   <TableCell />
+                  {/*Edit button */}
+                  {!!authUser.roles[ROLES.ADMINISTRATOR] && (
+                    <TableCell />
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
