@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -91,13 +90,7 @@ class AddCampaignListBase extends Component {
           <TableContainer>
             <Table className={classes.table} aria-label="Election Campaigns">
                 {allCampaigns.length === 0 ? (
-                  <TableBody>
-                    <TableRow key={0}>
-                      <TableCell style={{ borderBottom: 0 }}>
-                        <Box color="text.disabled">There are currently no Election Campaigns in the database.</Box>
-                      </TableCell>
-                    </TableRow>  
-                  </TableBody>
+                  <caption>There are currently no Election Campaigns in the database.</caption>
                 ) : (
                   <React.Fragment>
                     <caption>A list of the 5 most recent Election Campaigns. </caption>
