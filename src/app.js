@@ -9,7 +9,7 @@ import Account from './pages/Account';
 import Action from './pages/Action';
 import Administrator from './pages/Administrator';
 import Bid from './pages/Bid';
-import Campaigns from './pages/Campaigns';
+import Campaigns, { EditCampaign, ViewCampaign } from './pages/Campaigns';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import PasswordForget from './pages/PasswordForget';
@@ -171,6 +171,8 @@ class AppBase extends Component {
                     <Route path={ROUTES.ADMINISTRATOR} component={Administrator} />
                     <Route path={ROUTES.BID} component={Bid} />
                     <Route path={ROUTES.CAMPAIGNS} component={Campaigns} />
+                    <Route path={`${ROUTES.CAMPAIGN_EDIT}/:id`} component={EditCampaign} />
+                    <Route path={`${ROUTES.CAMPAIGN_VIEW}/:id`} component={ViewCampaign} />
                     <Route path={ROUTES.HOME} component={Home} />
                     <Route exact path={ROUTES.LANDING} component={Landing} />
                     <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
