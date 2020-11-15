@@ -24,9 +24,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import { withFirebase } from '../../firebase';
 
-import { AuthUserContext } from '../../session';
-
 import * as ROUTES from '../../constants/routes';
+import * as ROLES from '../../constants/roles';
 
 const styles = theme => ({
   appBar: {
@@ -81,7 +80,7 @@ class NavigationAuthBase extends Component {
   };
 
   render() {
-    const { classes, firebase, theme } = this.props;
+    const { classes, firebase, theme, authUser } = this.props;
 
     const { left, bottom } = this.state;
     
@@ -126,9 +125,11 @@ class NavigationAuthBase extends Component {
                 <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.SETTINGS} activeClassName="Mui-selected" aria-label="Settings">
                   <ListItemText primary="Settings" />
                 </ListItem>
-                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ADMINISTRATOR} activeClassName="Mui-selected" aria-label="Administrator">
-                  <ListItemText primary="Administrator" />
-                </ListItem>
+                {!!authUser.roles[ROLES.ADMINISTRATOR] && (
+                  <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ADMINISTRATOR} activeClassName="Mui-selected" aria-label="Administrator">
+                    <ListItemText primary="Administrator" />
+                  </ListItem>
+                  )}
               </List>
             </div>
           </Drawer>
@@ -153,9 +154,11 @@ class NavigationAuthBase extends Component {
                 <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.SETTINGS} activeClassName="Mui-selected" aria-label="Settings">
                   <ListItemText primary="Settings" />
                 </ListItem>
-                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ADMINISTRATOR} activeClassName="Mui-selected" aria-label="Administrator">
-                  <ListItemText primary="Administrator" />
-                </ListItem>
+                {!!authUser.roles[ROLES.ADMINISTRATOR] && (
+                  <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ADMINISTRATOR} activeClassName="Mui-selected" aria-label="Administrator">
+                    <ListItemText primary="Administrator" />
+                  </ListItem>
+                  )}
               </List>
             </div>
           </Drawer>
@@ -165,16 +168,12 @@ class NavigationAuthBase extends Component {
         <Drawer anchor="bottom" open={bottom} onClose={(e) => this.toggleDrawer('bottom', false, e)}>
           <div className={classes.bottomDrawer} role="presentation" onClick={(e) => this.toggleDrawer('bottom', false, e)} onKeyDown={(e) => this.toggleDrawer('bottom', false, e)}>
             <List component="nav" subheader={<ListSubheader color="inherit">You are signed in to your account.</ListSubheader>}>
-              <AuthUserContext.Consumer>
-                { authUser => authUser &&
-                  <ListItem divider>
-                    <ListItemIcon>
-                      <FaceIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={authUser.email} secondary={authUser.uid} />
-                  </ListItem>
-                }
-              </AuthUserContext.Consumer>
+              <ListItem divider>
+                <ListItemIcon>
+                  <FaceIcon />
+                </ListItemIcon>
+                <ListItemText primary={authUser.email} secondary={authUser.uid} />
+              </ListItem>
               <ListItem button onClick={firebase.doSignOut} aria-label="Sign Out">
                 <ListItemText primary="Sign Out" />
               </ListItem>
