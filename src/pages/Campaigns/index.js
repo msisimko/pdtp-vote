@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 
+import ListCampaigns from './ListCampaigns';
+import EditCampaign from './EditCampaign';
+import ViewCampaign from './ViewCampaign';
+
 import Separator from '../../components/Separator';
-import { Main as Sidebar } from '../../components/Sidebar';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +18,7 @@ class CampaignsBase extends Component {
   render() {
     return(
       <Grid container spacing={2}>
-        <Grid item md={8} xs={12}>
+        <Grid item xs={12}>
           
           <Paper elevation={0} square>
             <Box p={3}>
@@ -30,12 +33,7 @@ class CampaignsBase extends Component {
 
           <Separator />
             
-          {/* List Election Campaigns from here */}
-
-        </Grid>
-        <Grid item md={4} xs={12}>
-          
-          <Sidebar />
+          <ListCampaigns />
 
         </Grid>
       </Grid>
@@ -51,3 +49,5 @@ const Campaigns = compose(
 )(CampaignsBase);
 
 export default Campaigns;
+
+export { ListCampaigns, EditCampaign, ViewCampaign };
