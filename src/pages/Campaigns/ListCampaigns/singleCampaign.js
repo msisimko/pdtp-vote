@@ -7,12 +7,12 @@ import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 
 import LabelIcon from '@material-ui/icons/Label';
 import LabelOffIcon from '@material-ui/icons/LabelOff';
 
 import { DateTime } from "luxon";
-import { Typography } from '@material-ui/core';
 
 import * as ROUTES from '../../../constants/routes';
 
