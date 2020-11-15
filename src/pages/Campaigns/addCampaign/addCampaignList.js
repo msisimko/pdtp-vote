@@ -93,7 +93,7 @@ class AddCampaignListBase extends Component {
                 {allCampaigns.length === 0 ? (
                   <TableBody>
                     <TableRow key={0}>
-                      <TableCell>
+                      <TableCell style={{ borderBottom: 0 }}>
                         <Box color="text.disabled">There are currently no Election Campaigns in the database.</Box>
                       </TableCell>
                     </TableRow>  
