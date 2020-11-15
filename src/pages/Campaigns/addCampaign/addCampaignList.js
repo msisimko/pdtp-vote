@@ -118,7 +118,7 @@ class AddCampaignListBase extends Component {
                     <TableBody>
                       {allCampaigns.map((election) => (
                         <TableRow key={election.id} hover>
-                          <TableCell component="th" scope="row">
+                          <TableCell>
                             {election.featured ? (
                               <Tooltip title="Featured">
                                 <IconButton aria-label="Featured">
@@ -133,7 +133,7 @@ class AddCampaignListBase extends Component {
                               </Tooltip>
                             )}
                           </TableCell>
-                          <TableCell>
+                          <TableCell component="th" scope="row">
                             {election.title}
                           </TableCell>
                           <TableCell align="right">
