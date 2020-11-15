@@ -1,7 +1,6 @@
 export const ACCOUNT = '/account';
 export const ACTION = '/action';
 export const ADMINISTRATOR = '/administrator';
-export const BID = '/bid';
 export const CAMPAIGNS = '/campaigns';
 export const CAMPAIGN_EDIT = '/campaign/edit';
 export const CAMPAIGN_VIEW = '/campaign/view';
