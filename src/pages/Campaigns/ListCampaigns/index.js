@@ -20,6 +20,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import LabelImportantIcon from '@material-ui/icons/LabelImportant';
+
+import { withSnackbar } from 'notistack';
  
 import { withFirebase } from '../../../firebase';
 
@@ -35,6 +37,8 @@ class ListCampaignsBase extends Component {
   }
 
   componentDidMount() {
+    const { enqueueSnackbar } = this.props;
+
     this.listener = this.props.firebase
                       .elections()
                       .orderBy('createdOn', 'desc')
@@ -58,6 +62,8 @@ class ListCampaignsBase extends Component {
                           });
                         });
                         this.setState({ allCampaigns });
+                      }, (error) => {
+                        enqueueSnackbar(error.message, { variant: 'error' });
                       });
   }
 
@@ -108,6 +114,7 @@ class ListCampaignsBase extends Component {
 }
 
 const ListCampaigns = compose(
+  withSnackbar,
   withFirebase,
 )(ListCampaignsBase);
 

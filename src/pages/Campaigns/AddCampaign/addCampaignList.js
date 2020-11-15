@@ -46,6 +46,8 @@ class AddCampaignListBase extends Component {
   }
 
   componentDidMount() {
+    const { enqueueSnackbar } = this.props;
+
     this.listener = this.props.firebase
                       .elections()
                       .orderBy('createdOn', 'desc')
@@ -56,6 +58,8 @@ class AddCampaignListBase extends Component {
                           allCampaigns.push({ id: doc.id, title: doc.data().title, featured: doc.data().featured, createdBy: doc.data().createdBy });
                         });
                         this.setState({ allCampaigns });
+                      }, (error) => {
+                        enqueueSnackbar(error.message, { variant: 'error' });
                       });
   }
 
