@@ -32,7 +32,7 @@ const styles = theme => ({
 });
 
 const INITIAL_STATE = {
-  allElections: [],
+  allCampaigns: [],
 }
 
 class AddCampaignListBase extends Component {
@@ -52,11 +52,11 @@ class AddCampaignListBase extends Component {
                       .orderBy('createdOn', 'desc')
                       .limit(10)
                       .onSnapshot((querySnapshot) => {
-                        let allElections = [];
+                        let allCampaigns = [];
                         querySnapshot.forEach((doc) => {
-                          allElections.push({ id: doc.id, title: doc.data().title, featured: doc.data().featured, createdBy: doc.data().createdBy });
+                          allCampaigns.push({ id: doc.id, title: doc.data().title, featured: doc.data().featured, createdBy: doc.data().createdBy });
                         });
-                        this.setState({ allElections });
+                        this.setState({ allCampaigns });
                       });
   }
 
@@ -81,7 +81,7 @@ class AddCampaignListBase extends Component {
   render() {
     const { classes } = this.props;
 
-    const { allElections } = this.state;
+    const { allCampaigns } = this.state;
     
     const authUser = this.context;
 
@@ -90,7 +90,7 @@ class AddCampaignListBase extends Component {
         <Grid item xs={12}>
           <TableContainer>
             <Table className={classes.table} aria-label="simple table">
-                {allElections.length === 0 ? (
+                {allCampaigns.length === 0 ? (
                   <TableBody>
                     <TableRow key={0}>
                       <TableCell>
@@ -110,12 +110,13 @@ class AddCampaignListBase extends Component {
                             </IconButton>
                           </Tooltip>
                         </TableCell>
-                        <TableCell colSpan={2}>Campaign Title</TableCell>
+                        <TableCell>Campaign Title</TableCell>
+                        <TableCell />
                       </TableRow>
                     </TableHead>
 
                     <TableBody>
-                      {allElections.map((election) => (
+                      {allCampaigns.map((election) => (
                         <TableRow key={election.id} hover>
                           <TableCell component="th" scope="row">
                             {election.featured ? (
