@@ -50,7 +50,7 @@ class AddCampaignListBase extends Component {
     this.listener = this.props.firebase
                       .elections()
                       .orderBy('createdOn', 'desc')
-                      .limit(10)
+                      .limit(5)
                       .onSnapshot((querySnapshot) => {
                         let allCampaigns = [];
                         querySnapshot.forEach((doc) => {
@@ -100,7 +100,7 @@ class AddCampaignListBase extends Component {
                   </TableBody>
                 ) : (
                   <React.Fragment>
-                    <caption>A list of the 10 most recent Election Campaigns. </caption>
+                    <caption>A list of the 5 most recent Election Campaigns. </caption>
                     <TableHead>
                       <TableRow>
                         <TableCell>
