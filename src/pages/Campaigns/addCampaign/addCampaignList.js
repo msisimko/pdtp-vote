@@ -89,7 +89,7 @@ class AddCampaignListBase extends Component {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TableContainer>
-            <Table className={classes.table} aria-label="simple table">
+            <Table className={classes.table} aria-label="Election Campaigns">
                 {allCampaigns.length === 0 ? (
                   <TableBody>
                     <TableRow key={0}>
