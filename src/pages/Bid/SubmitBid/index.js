@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { compose } from 'recompose';
 
 import SubmitBidForm from './submitBidForm';
 
@@ -11,9 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import { withAuthorization, withEmailVerification } from '../../../session';
-
-class SubmitBidBase extends Component {
+class SubmitBid extends Component {
   render() {
     const { theme } = this.props;
 
@@ -34,12 +31,5 @@ class SubmitBidBase extends Component {
     )
   }
 }
-
-const condition = authUser => !!authUser;
-
-const SubmitBid = compose(
-  withAuthorization(condition),
-  withEmailVerification,
-)(SubmitBidBase);
 
 export default SubmitBid;
