@@ -129,7 +129,7 @@ class NavigationAuthBase extends Component {
                   <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ADMINISTRATOR} activeClassName="Mui-selected" aria-label="Administrator">
                     <ListItemText primary="Administrator" />
                   </ListItem>
-                  )}
+                )}
               </List>
             </div>
           </Drawer>
@@ -158,7 +158,7 @@ class NavigationAuthBase extends Component {
                   <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ADMINISTRATOR} activeClassName="Mui-selected" aria-label="Administrator">
                     <ListItemText primary="Administrator" />
                   </ListItem>
-                  )}
+                )}
               </List>
             </div>
           </Drawer>
