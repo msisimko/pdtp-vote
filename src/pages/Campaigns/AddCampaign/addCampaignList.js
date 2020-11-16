@@ -18,6 +18,8 @@ import LabelIcon from '@material-ui/icons/Label';
 import LabelImportantIcon from '@material-ui/icons/LabelImportant';
 import LabelOffIcon from '@material-ui/icons/LabelOff';
 
+import Skeleton from '@material-ui/lab/Skeleton';
+
 import { withSnackbar } from 'notistack';
  
 import { withFirebase } from '../../../firebase';
@@ -32,6 +34,7 @@ const styles = theme => ({
 
 const INITIAL_STATE = {
   allCampaigns: [],
+  loading: true,
 }
 
 class AddCampaignListBase extends Component {
@@ -57,7 +60,12 @@ class AddCampaignListBase extends Component {
                         querySnapshot.forEach((doc) => {
                           allCampaigns.push({ id: doc.id, title: doc.data().title, featured: doc.data().featured, createdBy: doc.data().createdBy });
                         });
-                        this.setState({ allCampaigns });
+
+                        this.setState({ 
+                          allCampaigns,
+                          loading: false,
+                        });
+
                       }, (error) => {
                         enqueueSnackbar(error.message, { variant: 'error' });
                       });
@@ -84,7 +92,7 @@ class AddCampaignListBase extends Component {
   render() {
     const { classes } = this.props;
 
-    const { allCampaigns } = this.state;
+    const { allCampaigns, loading } = this.state;
     
     const authUser = this.context;
 
@@ -93,54 +101,60 @@ class AddCampaignListBase extends Component {
         <Grid item xs={12}>
           <TableContainer>
             <Table className={classes.table} aria-label="Election Campaigns">
-                {allCampaigns.length === 0 ? (
-                  <caption>There are currently no Election Campaigns in the database.</caption>
-                ) : (
-                  <React.Fragment>
-                    <caption>A list of the 5 most recent Election Campaigns. </caption>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>
-                          <Tooltip title="Homepage Status">
-                            <IconButton aria-label="Homepage Status">
-                                <LabelImportantIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </TableCell>
-                        <TableCell>Campaign Title</TableCell>
-                        <TableCell />
-                      </TableRow>
-                    </TableHead>
-
-                    <TableBody>
-                      {allCampaigns.map((election) => (
-                        <TableRow key={election.id} hover>
+              {loading ? (
+                <caption><Skeleton variant="text" /></caption>
+              ) : (
+                <React.Fragment>
+                  {allCampaigns.length === 0 ? (
+                    <caption>There are currently no Election Campaigns in the database.</caption>
+                  ) : (
+                    <React.Fragment>
+                      <caption>A list of the 5 most recent Election Campaigns. </caption>
+                      <TableHead>
+                        <TableRow>
                           <TableCell>
-                            {election.featured ? (
-                              <Tooltip title="Featured">
-                                <IconButton aria-label="Featured">
-                                  <LabelIcon />
-                                </IconButton>
-                              </Tooltip>
-                            ) : (
-                              <Tooltip title="Not Featured">
-                                <IconButton aria-label="Not Featured">
-                                    <LabelOffIcon />
-                                </IconButton>
-                              </Tooltip>
-                            )}
+                            <Tooltip title="Homepage Status">
+                              <IconButton aria-label="Homepage Status">
+                                  <LabelImportantIcon />
+                              </IconButton>
+                            </Tooltip>
                           </TableCell>
-                          <TableCell component="th" scope="row">
-                            {election.title}
-                          </TableCell>
-                          <TableCell align="right">
-                            <Button size="small" onClick={() => this.handleDelete(election)} disabled={authUser.uid !== election.createdBy}>Delete</Button>
-                          </TableCell>
+                          <TableCell>Campaign Title</TableCell>
+                          <TableCell />
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </React.Fragment>
-                )}
+                      </TableHead>
+
+                      <TableBody>
+                        {allCampaigns.map((election) => (
+                          <TableRow key={election.id} hover>
+                            <TableCell>
+                              {election.featured ? (
+                                <Tooltip title="Featured">
+                                  <IconButton aria-label="Featured">
+                                    <LabelIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              ) : (
+                                <Tooltip title="Not Featured">
+                                  <IconButton aria-label="Not Featured">
+                                      <LabelOffIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              )}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {election.title}
+                            </TableCell>
+                            <TableCell align="right">
+                              <Button size="small" onClick={() => this.handleDelete(election)} disabled={authUser.uid !== election.createdBy}>Delete</Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </React.Fragment>
+                  )}
+                </React.Fragment>
+              )}
             </Table>
           </TableContainer>
         </Grid>

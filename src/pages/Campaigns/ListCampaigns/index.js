@@ -21,6 +21,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import LabelImportantIcon from '@material-ui/icons/LabelImportant';
 
+import Skeleton from '@material-ui/lab/Skeleton';
+
 import { withSnackbar } from 'notistack';
  
 import { withFirebase } from '../../../firebase';
@@ -31,6 +33,7 @@ import * as ROLES from '../../../constants/roles';
 
 const INITIAL_STATE = {
   allCampaigns: [],
+  loading: true,
 }
 
 class ListCampaignsBase extends Component {
@@ -67,7 +70,12 @@ class ListCampaignsBase extends Component {
                             createdByName: doc.data().createdByName,
                           });
                         });
-                        this.setState({ allCampaigns });
+
+                        this.setState({ 
+                          allCampaigns,
+                          loading: false,
+                        });
+
                       }, (error) => {
                         enqueueSnackbar(error.message, { variant: 'error' });
                       });
@@ -78,47 +86,54 @@ class ListCampaignsBase extends Component {
   }
   
   render() {
-    const { allCampaigns } = this.state;
+    const { allCampaigns, loading } = this.state;
 
     const authUser = this.context;
     
     return(
       <TableContainer component={Paper} elevation={0} square>
         <Table aria-label="Election Campaigns">
-          {allCampaigns.length === 0 ? (
-            <caption>There are currently no Election Campaigns in the database.</caption>
+          {loading ? (
+            <caption><Skeleton variant="text" /></caption>
           ) : (
             <React.Fragment>
-              <caption>A list of the 10 most recent Election Campaigns. </caption>
-              <TableHead>
-                <TableRow>
-                  {/* Featured or (!) icon */}
-                  <TableCell>
-                    <Tooltip title="Homepage Status">
-                      <IconButton aria-label="Homepage Status">
-                          <LabelImportantIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                  {/* Election Campaign Title */}
-                  <TableCell>Campaign Title</TableCell>
-                  {/* Status */}
-                  <TableCell>Campaign Status</TableCell>
-                  {/* Action button */}
-                  <TableCell />
-                  {/*Edit button */}
-                  {!!authUser.roles[ROLES.ADMINISTRATOR] && (
-                    <TableCell />
-                  )}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {allCampaigns.map((campaign) => (
-                  <SingleCampaign key={campaign.id} campaign={campaign} />
-                ))}
-              </TableBody>
+              {allCampaigns.length === 0 ? (
+                <caption>There are currently no Election Campaigns in the database.</caption>
+              ) : (
+                <React.Fragment>
+                  <caption>A list of the 10 most recent Election Campaigns. </caption>
+                  <TableHead>
+                    <TableRow>
+                      {/* Featured or (!) icon */}
+                      <TableCell>
+                        <Tooltip title="Homepage Status">
+                          <IconButton aria-label="Homepage Status">
+                              <LabelImportantIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                      {/* Election Campaign Title */}
+                      <TableCell>Campaign Title</TableCell>
+                      {/* Status */}
+                      <TableCell>Campaign Status</TableCell>
+                      {/* Action button */}
+                      <TableCell />
+                      {/*Edit button */}
+                      {!!authUser.roles[ROLES.ADMINISTRATOR] && (
+                        <TableCell />
+                      )}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {allCampaigns.map((campaign) => (
+                      <SingleCampaign key={campaign.id} campaign={campaign} />
+                    ))}
+                  </TableBody>
+                </React.Fragment>
+              )}
             </React.Fragment>
           )}
+            
         </Table>
       </TableContainer>
     );
