@@ -257,7 +257,6 @@ class EditCampaignFormBase extends Component {
                   disabled={disabled}
                   showTodayButton
                   ampm={false}
-                  disablePast
                 />
               </Grid>
             </Grid>
@@ -281,7 +280,6 @@ class EditCampaignFormBase extends Component {
                   disabled={disabled}
                   showTodayButton
                   ampm={false}
-                  disablePast
                 />
               </Grid>
               <Grid item md={6} xs={12}>
@@ -296,7 +294,6 @@ class EditCampaignFormBase extends Component {
                   disabled={disabled}
                   showTodayButton
                   ampm={false}
-                  disablePast
                 />
               </Grid>
             </Grid>
@@ -320,7 +317,6 @@ class EditCampaignFormBase extends Component {
                   disabled={disabled}
                   showTodayButton
                   ampm={false}
-                  disablePast
                 />
               </Grid>
               <Grid item md={6} xs={12}>
@@ -335,7 +331,6 @@ class EditCampaignFormBase extends Component {
                   disabled={disabled}
                   showTodayButton
                   ampm={false}
-                  disablePast
                 />
               </Grid>
             </Grid>
@@ -358,7 +353,6 @@ class EditCampaignFormBase extends Component {
                   disabled={disabled}
                   showTodayButton
                   ampm={false}
-                  disablePast
                 />
               </Grid>
             </Grid>
