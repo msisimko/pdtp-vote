@@ -55,6 +55,7 @@ const INITIAL_STATE = {
 
 class EditCampaignFormBase extends Component {
   static contextType = AuthUserContext;
+  
   constructor(props) {
     super(props);
  
