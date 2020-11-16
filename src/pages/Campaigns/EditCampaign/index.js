@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link as RouterLink } from "react-router-dom";
-import { compose } from 'recompose';
 
 import EditCampaignForm from './editCampaignForm';
 
@@ -21,7 +20,7 @@ import { withAuthorization } from '../../../session';
 import * as ROUTES from '../../../constants/routes';
 import * as ROLES from '../../../constants/roles';
 
-class EditCampaignBase extends Component {
+class EditCampaign extends Component {
   render() {
     const id = this.props.match.params.id; // Read id passed as URL parameter
     
@@ -76,10 +75,6 @@ class EditCampaignBase extends Component {
 const condition = authUser =>
   authUser && !!authUser.roles[ROLES.ADMINISTRATOR];
 
-const EditCampaign = compose(
-  withAuthorization(condition),
-)(EditCampaignBase);
-
-export default EditCampaign;
+export default withAuthorization(condition)(EditCampaign);
 
 export { EditCampaignForm };
