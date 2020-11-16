@@ -27,12 +27,12 @@ class SingleCampaign extends Component {
 
     const authUser = this.context;
 
-    // Get current DateTime
-    const now = DateTime.local()
-
     /**
      * Calculate Status - Campaign Start, Bid Submissions, Voting, Campaign Stop 
     */
+
+    // Get current DateTime
+    const now = DateTime.local()
     
     // Initialize an empty object, status
     let status = {};
