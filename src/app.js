@@ -170,7 +170,7 @@ class AppBase extends Component {
                     <Route path={ROUTES.ADMINISTRATOR} component={Administrator} />
                     <Route path={ROUTES.CAMPAIGNS} component={Campaigns} />
                     <Route path={`${ROUTES.CAMPAIGN_EDIT}/:id`} component={EditCampaign} />
-                    <Route path={`${ROUTES.CAMPAIGN_VIEW}/:id`} component={ViewCampaign} />
+                    <Route path={`${ROUTES.CAMPAIGN_VIEW}/:id/:tab`} component={ViewCampaign} />
                     <Route path={ROUTES.HOME} component={Home} />
                     <Route exact path={ROUTES.LANDING} component={Landing} />
                     <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />

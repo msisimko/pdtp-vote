@@ -44,18 +44,22 @@ class SingleCampaign extends Component {
       status['message'] = `Bid Submissions start on ${DateTime.fromISO(campaign.bidSubmissionOpenDateTime).toLocaleString(DateTime.DATETIME_MED)}`;
       status['color'] = 'info.main';
       status['button'] = 'View Campaign';
+      status['tab'] = 0;
     } else if (now >= DateTime.fromISO(campaign.bidSubmissionOpenDateTime) && now < DateTime.fromISO(campaign.bidSubmissionCloseDateTime)) {
       status['message'] = `Bid Submissions ongoing until ${DateTime.fromISO(campaign.bidSubmissionCloseDateTime).toLocaleString(DateTime.DATETIME_MED)}`;
       status['color'] = 'success.main';
       status['button'] = 'Submit Bid';
+      status['tab'] = 1;
     } else if (now >= DateTime.fromISO(campaign.bidSubmissionCloseDateTime) && now < DateTime.fromISO(campaign.votingOpenDateTime)) {
       status['message'] = `Bid Submissions closed. Voting starts on ${DateTime.fromISO(campaign.votingOpenDateTime).toLocaleString(DateTime.DATETIME_MED)}`;
       status['color'] = 'info.main';
       status['button'] = 'View Candidates';
+      status['tab'] = 2;
     } else if (now >= DateTime.fromISO(campaign.votingOpenDateTime) && now < DateTime.fromISO(campaign.votingCloseDateTime)) {
       status['message'] = `Voting ongoing until ${DateTime.fromISO(campaign.votingCloseDateTime).toLocaleString(DateTime.DATETIME_MED)}`;
       status['color'] = 'success.main';
       status['button'] = 'Vote Now';
+      status['tab'] = 2;
     } else if (now >= DateTime.fromISO(campaign.votingCloseDateTime) && now < DateTime.fromISO(campaign.campaignStopDateTime)) {
       status['message'] = `Voting closed. Results to be announced on ${DateTime.fromISO(campaign.campaignStopDateTime).toLocaleString(DateTime.DATETIME_MED)}`;
       status['color'] = 'error.main';
@@ -63,6 +67,7 @@ class SingleCampaign extends Component {
       status['message'] = `Campaign ended on ${DateTime.fromISO(campaign.campaignStopDateTime).toLocaleString(DateTime.DATETIME_MED)}`;
       status['color'] = 'text.disabled';
       status['button'] = 'View Results';
+      status['tab'] = 3;
     }
 
     return(
@@ -97,7 +102,7 @@ class SingleCampaign extends Component {
           {/* Action button */}
           {status.button ? (
             <TableCell align="center">
-              <Button size="small" component={Link} to={`${ROUTES.CAMPAIGN_VIEW}/${campaign.id}`}>{status.button}</Button>
+              <Button size="small" component={Link} to={`${ROUTES.CAMPAIGN_VIEW}/${campaign.id}/${status.tab}`}>{status.button}</Button>
             </TableCell>
           ) : (
             <TableCell />

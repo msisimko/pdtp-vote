@@ -111,7 +111,15 @@ class Firebase {
   
   elections = () => this.db.collection('elections');
 
-  election = id => this.db.collection('elections').doc(id);
+  election = electionId => this.db.collection('elections').doc(electionId);
+
+  candidates = electionId => this.db.collection('elections').doc(electionId).collection('candidates');
+
+  candidate = (electionId, candidateId) => this.db.collection('elections').doc(electionId).collection('candidates').doc(candidateId);
+
+  votes = electionId => this.db.collection('elections').doc(electionId).collection('votes');
+
+  vote = (electionId, voteId) => this.db.collection('elections').doc(electionId).collection('votes').doc(voteId);
 }
 
 export default Firebase;
