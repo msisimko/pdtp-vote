@@ -27,7 +27,7 @@ class Navigation extends Component {
           {authUser => 
             authUser ?
               // Pass handleToggleTheme() function i.e. Lifting State Up technique & authUser as props
-              <NavigationAuth theme={theme} onHandleToggleTheme={this.handleToggleTheme} authUser={authUser} /> 
+              <NavigationAuth theme={theme} onHandleToggleTheme={this.handleToggleTheme} /> 
             :
               // Pass handleToggleTheme() function as prop i.e. Lifting State Up technique
               <NavigationNonAuth theme={theme} onHandleToggleTheme={this.handleToggleTheme} />

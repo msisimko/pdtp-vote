@@ -53,14 +53,14 @@ const light = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#1976d2',
+      main: '#0015bc',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#ff0000',
     },
     background: {
       default: '#e6ecf0',
-    }
+    },
   },
   overrides: {
     MuiFormHelperText: {
@@ -69,7 +69,7 @@ const light = createMuiTheme({
         marginRight: 0,
       },
     }
-  }
+  },
 });
 
 // Using the createMuiTheme() method, we declare the dark theme
@@ -80,7 +80,7 @@ const dark = createMuiTheme({
       main: '#000000',
     },
     secondary: {
-      main: '#f48fb1',
+      main: '#670000',
     },
   },
   overrides: {
@@ -90,7 +90,7 @@ const dark = createMuiTheme({
         marginRight: 0,
       },
     }
-  }
+  },
 });
 
 class AppBase extends Component {
@@ -135,15 +135,22 @@ class AppBase extends Component {
     const { theme } = this.state;
 
     const notistackRef = React.createRef();
+
     const onClickDismiss = key => () => { 
         notistackRef.current.closeSnackbar(key);
     }
 
     return(
       <ThemeProvider theme={theme === 'light' ? light : dark}>
+      <MuiPickersUtilsProvider utils={LuxonUtils}>
+      <SnackbarProvider preventDuplicate maxSnack={3} ref={notistackRef} action={(key) => ( <Button size="small" onClick={onClickDismiss(key)}>Dismiss</Button> )}>
+        
         <div className={classes.root}>
+          
           <CssBaseline />
+          
           {/* The rest of the application */}
+          
           <Router>
 
             {/**
@@ -155,37 +162,38 @@ class AppBase extends Component {
               * More: https://reactjs.org/docs/lifting-state-up.html
               */}
             <Navigation theme={theme} onToggleTheme={this.toggleTheme} />
+
+            <main className={classes.content}>
+              
+              <div className={classes.toolbar} />
+              
+              <Separator />
+              
+              <Container maxWidth="md" disableGutters>
+                <Route path={ROUTES.ACCOUNT} component={Account} />
+                <Route path={ROUTES.ACTION} component={Action} />
+                <Route path={ROUTES.ADMINISTRATOR} component={Administrator} />
+                <Route path={ROUTES.CAMPAIGNS} component={Campaigns} />
+                <Route path={`${ROUTES.CAMPAIGN_EDIT}/:id`} component={EditCampaign} />
+                <Route path={`${ROUTES.CAMPAIGN_VIEW}/:id/:tab`} component={ViewCampaign} />
+                <Route path={ROUTES.HOME} component={Home} />
+                <Route exact path={ROUTES.LANDING} component={Landing} />
+                <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
+                <Route path={ROUTES.SETTINGS} component={Settings} />
+                <Route path={ROUTES.SIGN_IN} component={SignIn} />
+                <Route path={ROUTES.SIGN_UP} component={SignUp} />
+              </Container>
+
+              <Separator />
+
+            </main>
             
-
-            <SnackbarProvider preventDuplicate maxSnack={3} ref={notistackRef} action={(key) => ( <Button size="small" onClick={onClickDismiss(key)}>Dismiss</Button> )}> 
-              <MuiPickersUtilsProvider utils={LuxonUtils}>
-                <main className={classes.content}>
-                  <div className={classes.toolbar} />
-                  
-                  <Separator />
-                  
-                  <Container maxWidth="md" disableGutters>
-                    <Route path={ROUTES.ACCOUNT} component={Account} />
-                    <Route path={ROUTES.ACTION} component={Action} />
-                    <Route path={ROUTES.ADMINISTRATOR} component={Administrator} />
-                    <Route path={ROUTES.CAMPAIGNS} component={Campaigns} />
-                    <Route path={`${ROUTES.CAMPAIGN_EDIT}/:id`} component={EditCampaign} />
-                    <Route path={`${ROUTES.CAMPAIGN_VIEW}/:id/:tab`} component={ViewCampaign} />
-                    <Route path={ROUTES.HOME} component={Home} />
-                    <Route exact path={ROUTES.LANDING} component={Landing} />
-                    <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />
-                    <Route path={ROUTES.SETTINGS} component={Settings} />
-                    <Route path={ROUTES.SIGN_IN} component={SignIn} />
-                    <Route path={ROUTES.SIGN_UP} component={SignUp} />
-                  </Container>
-
-                  <Separator />
-                </main>
-              </MuiPickersUtilsProvider>
-            </SnackbarProvider>
-
           </Router>
+
         </div>
+
+      </SnackbarProvider>
+      </MuiPickersUtilsProvider>
       </ThemeProvider>
     );
   }

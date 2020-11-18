@@ -24,6 +24,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import { withFirebase } from '../../firebase';
 
+import { AuthUserContext } from '../../session';
+
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 
@@ -52,6 +54,8 @@ const styles = theme => ({
 });
 
 class NavigationAuthBase extends Component {
+  static contextType = AuthUserContext;
+
   constructor(props) {
     super(props);
 
@@ -80,9 +84,38 @@ class NavigationAuthBase extends Component {
   };
 
   render() {
-    const { classes, firebase, theme, authUser } = this.props;
+    const { classes, firebase, theme } = this.props;
 
     const { left, bottom } = this.state;
+
+    const authUser = this.context;
+
+    /**
+     * The links for the Navigation Drawer
+     */
+    const drawerLinks =  (
+      <React.Fragment>
+        <List component="nav" subheader={<ListSubheader color="inherit" disableSticky={true}>Menu</ListSubheader>}>
+          <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.HOME} activeClassName="Mui-selected" aria-label="Home">
+            <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.CAMPAIGNS} activeClassName="Mui-selected" aria-label="Campains">
+            <ListItemText primary="Campaigns" />
+          </ListItem>
+          <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ACCOUNT} activeClassName="Mui-selected" aria-label="Account">
+            <ListItemText primary="Account" />
+          </ListItem>
+          <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.SETTINGS} activeClassName="Mui-selected" aria-label="Settings">
+            <ListItemText primary="Settings" />
+          </ListItem>
+          {!!authUser.roles[ROLES.ADMINISTRATOR] && (
+            <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ADMINISTRATOR} activeClassName="Mui-selected" aria-label="Administrator">
+              <ListItemText primary="Administrator" />
+            </ListItem>
+          )}
+        </List>
+      </React.Fragment>
+    );
     
     return(
       <React.Fragment>
@@ -94,7 +127,7 @@ class NavigationAuthBase extends Component {
                 <MenuIcon />
               </IconButton>
             </Hidden>
-            <Typography variant="h6" className={classes.title}>PDTP Kura</Typography>
+            <Typography variant="h6" className={classes.title}>Kura</Typography>
             <IconButton onClick={this.toggleTheme} color="inherit" aria-label="Toggle Theme">
               {theme === 'light' ? <Brightness4Icon /> : <BrightnessHighIcon />}
             </IconButton>
@@ -109,25 +142,7 @@ class NavigationAuthBase extends Component {
           <Drawer className={classes.leftDrawer} variant="permanent" classes={{ paper: classes.leftDrawerPaper, }}>
             <Toolbar />
             <div className={classes.leftDrawerContainer}>
-              <List component="nav" subheader={<ListSubheader color="inherit" disableSticky={true}>Menu</ListSubheader>}>
-                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.HOME} activeClassName="Mui-selected" aria-label="Home">
-                  <ListItemText primary="Home" />
-                </ListItem>
-                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.CAMPAIGNS} activeClassName="Mui-selected" aria-label="Campains">
-                  <ListItemText primary="Campaigns" />
-                </ListItem>
-                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ACCOUNT} activeClassName="Mui-selected" aria-label="Account">
-                  <ListItemText primary="Account" />
-                </ListItem>
-                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.SETTINGS} activeClassName="Mui-selected" aria-label="Settings">
-                  <ListItemText primary="Settings" />
-                </ListItem>
-                {!!authUser.roles[ROLES.ADMINISTRATOR] && (
-                  <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ADMINISTRATOR} activeClassName="Mui-selected" aria-label="Administrator">
-                    <ListItemText primary="Administrator" />
-                  </ListItem>
-                )}
-              </List>
+              {drawerLinks}
             </div>
           </Drawer>
         </Hidden>
@@ -135,25 +150,7 @@ class NavigationAuthBase extends Component {
         <Hidden lgUp>
           <Drawer anchor="left" open={left} onClose={(e) => this.toggleDrawer('left', false, e)}>
             <div className={classes.leftDrawer} role="presentation" onClick={(e) => this.toggleDrawer('left', false, e)} onKeyDown={(e) => this.toggleDrawer('left', false, e)}>
-              <List component="nav" subheader={<ListSubheader color="inherit" disableSticky={true}>Menu</ListSubheader>}>
-                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.HOME} activeClassName="Mui-selected" aria-label="Home">
-                  <ListItemText primary="Home" />
-                </ListItem>
-                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.CAMPAIGNS} activeClassName="Mui-selected" aria-label="Campains">
-                  <ListItemText primary="Campaigns" />
-                </ListItem>
-                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ACCOUNT} activeClassName="Mui-selected" aria-label="Account">
-                  <ListItemText primary="Account" />
-                </ListItem>
-                <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.SETTINGS} activeClassName="Mui-selected" aria-label="Settings">
-                  <ListItemText primary="Settings" />
-                </ListItem>
-                {!!authUser.roles[ROLES.ADMINISTRATOR] && (
-                  <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ADMINISTRATOR} activeClassName="Mui-selected" aria-label="Administrator">
-                    <ListItemText primary="Administrator" />
-                  </ListItem>
-                )}
-              </List>
+              {drawerLinks}
             </div>
           </Drawer>
         </Hidden>
