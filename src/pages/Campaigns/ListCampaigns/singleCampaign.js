@@ -59,7 +59,6 @@ class SingleCampaign extends Component {
     } else if (now >= DateTime.fromISO(campaign.votingCloseDateTime) && now < DateTime.fromISO(campaign.campaignStopDateTime)) {
       status['message'] = `Voting closed. Results to be announced on ${DateTime.fromISO(campaign.campaignStopDateTime).toLocaleString(DateTime.DATETIME_MED)}`;
       status['color'] = 'error.main';
-      status['button'] = 'My Choice';
     } else if (now >= DateTime.fromISO(campaign.campaignStopDateTime)) {
       status['message'] = `Campaign ended on ${DateTime.fromISO(campaign.campaignStopDateTime).toLocaleString(DateTime.DATETIME_MED)}`;
       status['color'] = 'text.disabled';
