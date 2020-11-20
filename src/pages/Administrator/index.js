@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 
-// Imported from Campaigns page
-import AddCampaign from '../Campaigns/AddCampaign';
-
-import Separator from '../../components/Separator';
-import { Main as Sidebar } from '../../components/Sidebar';
+import { AddElection } from '../../components/Elections';
+import { Separator } from '../../components/Separator';
+import { MainSidebar as Sidebar } from '../../components/Sidebars';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -42,8 +40,9 @@ class AdministratorBase extends Component {
               </Typography>
             </Box>
           </Paper>
-            
-          <AddCampaign />
+          
+          {/* Add Election */}
+          <AddElection />
 
         </Grid>
         <Grid item md={4} xs={12}>

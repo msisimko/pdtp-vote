@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 
-import SignInForm from './signInForm';
-import SignInLink from './signInLink';
-
-import { SignUpLink } from '../SignUp';
-import { PasswordForgetLink } from '../PasswordForget';
-
-import { Authentication as Sidebar } from '../../components/Sidebar';
+import { SignInForm } from '../../components/SignIn';
+import { SignUpLink } from '../../components/SignUp';
+import { PasswordForgetLink } from '../../components/PasswordForget';
+import { AuthenticationSidebar as Sidebar } from '../../components/Sidebars';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -74,5 +71,3 @@ class SignIn extends Component {
 }
  
 export default SignIn;
-
-export { SignInForm, SignInLink };

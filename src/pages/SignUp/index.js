@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 
-import SignUpForm from './signUpForm';
-import SignUpLink from './signUpLink';
-
-import { SignInLink } from '../SignIn';
-
-import { Authentication as Sidebar } from '../../components/Sidebar';
+import { SignUpForm } from '../../components/SignUp';
+import { SignInLink } from '../../components/SignIn';
+import { AuthenticationSidebar as Sidebar } from '../../components/Sidebars';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -71,4 +68,3 @@ class SignUp extends Component {
  
 export default SignUp;
 
-export { SignUpForm, SignUpLink };

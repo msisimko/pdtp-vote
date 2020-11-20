@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 
-import RecoverEmail from './RecoverEmail';
-import ResetPassword from './ResetPassword';
-import VerifyEmail from './VerifyEmail';
-
-import { Actions as Sidebar} from '../../components/Sidebar';
+import { RecoverEmail, ResetPassword, VerifyEmail } from '../../components/Action';
+import { ActionSidebar as Sidebar} from '../../components/Sidebars';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -98,5 +95,3 @@ class Action extends Component {
 }
 
 export default Action;
-
-export { RecoverEmail, ResetPassword, VerifyEmail };

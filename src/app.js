@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { compose } from 'recompose';
 
-import Navigation from './components/Navigation';
-import Separator from './components/Separator';
+import { Navigation } from './components/Navigation';
+import { Separator } from './components/Separator';
 
 import Account from './pages/Account';
 import Action from './pages/Action';
 import Administrator from './pages/Administrator';
-import Campaigns, { EditCampaign, ViewCampaign } from './pages/Campaigns';
+import Elections from './pages/Elections';
+import ElectionEdit from './pages/Elections/Edit';
+import ElectionView from './pages/Elections/View';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import PasswordForget from './pages/PasswordForget';
@@ -143,7 +145,7 @@ class AppBase extends Component {
     return(
       <ThemeProvider theme={theme === 'light' ? light : dark}>
       <MuiPickersUtilsProvider utils={LuxonUtils}>
-      <SnackbarProvider preventDuplicate maxSnack={3} ref={notistackRef} action={(key) => ( <Button size="small" onClick={onClickDismiss(key)}>Dismiss</Button> )}>
+      <SnackbarProvider preventDuplicate maxSnack={3} autoHideDuration={1800} disableWindowBlurListener={true} ref={notistackRef} action={(key) => ( <Button size="small" onClick={onClickDismiss(key)}>Dismiss</Button> )}>
         
         <div className={classes.root}>
           
@@ -173,9 +175,9 @@ class AppBase extends Component {
                 <Route path={ROUTES.ACCOUNT} component={Account} />
                 <Route path={ROUTES.ACTION} component={Action} />
                 <Route path={ROUTES.ADMINISTRATOR} component={Administrator} />
-                <Route path={ROUTES.CAMPAIGNS} component={Campaigns} />
-                <Route path={`${ROUTES.CAMPAIGN_EDIT}/:id`} component={EditCampaign} />
-                <Route path={`${ROUTES.CAMPAIGN_VIEW}/:id/:tab`} component={ViewCampaign} />
+                <Route path={ROUTES.ELECTIONS} component={Elections} />
+                <Route path={`${ROUTES.ELECTION_EDIT}/:id`} component={ElectionEdit} />
+                <Route path={`${ROUTES.ELECTION_VIEW}/:id`} component={ElectionView} />
                 <Route path={ROUTES.HOME} component={Home} />
                 <Route exact path={ROUTES.LANDING} component={Landing} />
                 <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget} />

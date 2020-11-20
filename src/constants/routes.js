@@ -1,9 +1,9 @@
 export const ACCOUNT = '/account';
 export const ACTION = '/action';
 export const ADMINISTRATOR = '/administrator';
-export const CAMPAIGNS = '/campaigns';
-export const CAMPAIGN_EDIT = '/campaign/edit';
-export const CAMPAIGN_VIEW = '/campaign/view';
+export const ELECTIONS = '/elections'
+export const ELECTION_EDIT = '/election/edit'
+export const ELECTION_VIEW = '/election/view'
 export const HOME = '/home';
 export const LANDING = '/';
 export const PASSWORD_FORGET = '/pw-forget';

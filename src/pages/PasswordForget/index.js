@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 
-import PasswordForgetForm from './passwordForgetForm';
-import PasswordForgetLink from './passwordForgetLink';
-
-import { SignUpLink } from '../SignUp';
-
-import { Authentication as Sidebar } from '../../components/Sidebar';
+import { PasswordForgetForm } from '../../components/PasswordForget';
+import { SignUpLink } from '../../components/SignUp';
+import { AuthenticationSidebar as Sidebar } from '../../components/Sidebars';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -70,5 +67,3 @@ class PasswordForget extends Component {
 }
  
 export default PasswordForget;
-
-export { PasswordForgetForm, PasswordForgetLink };

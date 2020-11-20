@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 
-import Separator from '../../components/Separator';
-import { Main as Sidebar } from '../../components/Sidebar';
+import { Separator } from '../../components/Separator';
+import { MainSidebar as Sidebar } from '../../components/Sidebars';
 
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';

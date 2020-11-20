@@ -99,8 +99,8 @@ class NavigationAuthBase extends Component {
           <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.HOME} activeClassName="Mui-selected" aria-label="Home">
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.CAMPAIGNS} activeClassName="Mui-selected" aria-label="Campains">
-            <ListItemText primary="Campaigns" />
+          <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ELECTIONS} activeClassName="Mui-selected" aria-label="Elections">
+            <ListItemText primary="Elections" />
           </ListItem>
           <ListItem button onClick={(e) => this.toggleDrawer('left', false, e)} component={NavLink} exact={true} to={ROUTES.ACCOUNT} activeClassName="Mui-selected" aria-label="Account">
             <ListItemText primary="Account" />
