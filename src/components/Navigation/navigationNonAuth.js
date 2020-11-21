@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -95,11 +94,9 @@ class NavigationNonAuth extends Component {
         
         <AppBar position="fixed" color="primary" className={classes.appBar} elevation={0}>
           <Toolbar>
-            <Hidden lgUp>
-              <IconButton edge="start" className={classes.menuButton} onClick={(e) => this.toggleDrawer('left', true, e)} color="inherit" aria-label="Menu">
-                <MenuIcon />
-              </IconButton>
-            </Hidden>
+            <IconButton edge="start" className={classes.menuButton} onClick={(e) => this.toggleDrawer('left', true, e)} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
             <Typography variant="h6" className={classes.title}>Kura</Typography>
             <IconButton onClick={this.toggleTheme} color="inherit" aria-label="Toggle Theme">
               {theme === 'light' ? <Brightness4Icon /> : <BrightnessHighIcon />}
@@ -111,22 +108,11 @@ class NavigationNonAuth extends Component {
         </AppBar>
 
         {/* Left drawer */}
-        <Hidden mdDown>
-          <Drawer className={classes.leftDrawer} variant="permanent" classes={{ paper: classes.leftDrawerPaper, }}>
-            <Toolbar />
-            <div className={classes.leftDrawerContainer}>
-              {drawerLinks}
-            </div>
-          </Drawer>
-        </Hidden>
-
-        <Hidden lgUp>
-          <Drawer anchor="left" open={left} onClose={(e) => this.toggleDrawer('left', false, e)}>
-            <div className={classes.leftDrawer} role="presentation" onClick={(e) => this.toggleDrawer('left', false, e)} onKeyDown={(e) => this.toggleDrawer('left', false, e)}>
-              {drawerLinks}
-            </div>
-          </Drawer>
-        </Hidden>
+        <Drawer anchor="left" open={left} onClose={(e) => this.toggleDrawer('left', false, e)}>
+          <div className={classes.leftDrawer} role="presentation" onClick={(e) => this.toggleDrawer('left', false, e)} onKeyDown={(e) => this.toggleDrawer('left', false, e)}>
+            {drawerLinks}
+          </div>
+        </Drawer>
         
         {/* Bottom drawer */}
         <Drawer anchor="bottom" open={bottom} onClose={(e) => this.toggleDrawer('bottom', false, e)}>
