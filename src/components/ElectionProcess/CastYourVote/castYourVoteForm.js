@@ -87,71 +87,81 @@ class CastYourVoteFormBase extends Component {
   }
 
   onSubmit(event) {
-    const { enqueueSnackbar, electionId, votingStartDateTime, votingStopDateTime, teams } = this.props;
+    const { enqueueSnackbar, electionId, votingStartDateTime, votingStopDateTime, eligibleVotersArray, teams } = this.props;
 
     const authUser = this.context;
 
     this.setState({ disabled: true });
-
-    /**
-     * Get UUID associated with this vote - this is a 
-     * universal unique identifier code that will be 
-     * displayed with the results of the election
-     */
-    let uuid = uuidv4();
-
-    /**
-     * Filter teams array object, get the team
-     * information of the team voted for
-     */
-    let team = teams.filter(this.getTeamSelected);
     
-    if( 
-      DateTime.local() >= DateTime.fromISO(votingStartDateTime) 
-      && 
-      DateTime.local() < DateTime.fromISO(votingStopDateTime) 
-    ) {
-      /** 
-       * If current time (NOW) is:
-       *  - Greater than or equal to Voting START DateTime
-       *  - Less than Voting STOP DateTime
-       * 
+    /**
+     * Check if user's email is eligible to vote
+     */
+    if (eligibleVotersArray.includes(authUser.email)) {
+      /**
+       * Get UUID associated with this vote - this is a 
+       * universal unique identifier code that will be 
+       * displayed with the results of the election
        */
+      let uuid = uuidv4();
 
-      this.props.firebase
-        .votes(electionId)
-        .doc(authUser.uid)
-        .set({
-          uuid,
-          candidate: team[0].id,
-          candidateName: team[0].candidateName,
-          candidateSlogan: team[0].slogan,
-          createdOn: this.props.firebase.getServerTimestamp(),
-          createdBy: authUser.uid,
-          createdByName: authUser.displayName,
-          createdByEmail: authUser.email,
-        }, { merge: true })
-        .then(() => {
-          enqueueSnackbar('Your vote has been cast successfully.', { variant: 'success', onClose: this.handleSuccess });
-        })
-        .catch(error => {
-          enqueueSnackbar(error.message, { variant: 'error', onClose: this.handleError });
-        });
-
-    } else if ( 
-      DateTime.local() >= DateTime.fromISO(votingStopDateTime) 
-      || 
-      DateTime.local() < DateTime.fromISO(votingStartDateTime) 
-    ) {
-      /** 
-       * If current time (NOW) is:
-       *  - Great than or equal to Voting STOP DateTime
-       *  - Less than Voting START DateTime
-       * 
+      /**
+       * Filter teams array object, get the team
+       * information of the team voted for
        */
+      let team = teams.filter(this.getTeamSelected);
+      
+      if( 
+        DateTime.local() >= DateTime.fromISO(votingStartDateTime) 
+        && 
+        DateTime.local() < DateTime.fromISO(votingStopDateTime) 
+      ) {
+        /** 
+         * If current time (NOW) is:
+         *  - Greater than or equal to Voting START DateTime
+         *  - Less than Voting STOP DateTime
+         * 
+         */
 
-      enqueueSnackbar('You cannot cast your vote at this time.', { variant: 'error' });
+        this.props.firebase
+          .votes(electionId)
+          .doc(authUser.uid)
+          .set({
+            uuid,
+            candidate: team[0].id,
+            candidateName: team[0].candidateName,
+            candidateSlogan: team[0].slogan,
+            createdOn: this.props.firebase.getServerTimestamp(),
+            createdBy: authUser.uid,
+            createdByName: authUser.displayName,
+            createdByEmail: authUser.email,
+          }, { merge: true })
+          .then(() => {
+            enqueueSnackbar('Your vote has been cast successfully.', { variant: 'success', onClose: this.handleSuccess });
+          })
+          .catch(error => {
+            enqueueSnackbar(error.message, { variant: 'error', onClose: this.handleError });
+          });
 
+      } else if ( 
+        DateTime.local() >= DateTime.fromISO(votingStopDateTime) 
+        || 
+        DateTime.local() < DateTime.fromISO(votingStartDateTime) 
+      ) {
+        /** 
+         * If current time (NOW) is:
+         *  - Great than or equal to Voting STOP DateTime
+         *  - Less than Voting START DateTime
+         * 
+         */
+
+        enqueueSnackbar('You cannot cast your vote at this time.', { variant: 'error' });
+
+      } else {
+        enqueueSnackbar('Unkown error.', { variant: 'error' });
+      }
+
+    } else {
+      enqueueSnackbar('You are not eligible to participate in this election.', { variant: 'error' });
     }
 
     event.preventDefault();

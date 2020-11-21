@@ -42,6 +42,7 @@ const INITIAL_STATE = {
   bidSubmissionStopDateTime: '',
   votingStartDateTime: '',
   votingStopDateTime: '',
+  eligibleVotersArray: [],
   loading: true,
 }
 
@@ -65,6 +66,7 @@ class ElectionProcessBase extends Component {
           bidSubmissionStopDateTime: doc.data().bidSubmissionStopDateTime,
           votingStartDateTime: doc.data().votingStartDateTime,
           votingStopDateTime: doc.data().votingStopDateTime,
+          eligibleVotersArray: doc.data().eligibleVotersArray,
           loading: false,
         });
       })
@@ -76,7 +78,7 @@ class ElectionProcessBase extends Component {
   render() {
     const { classes, electionId } = this.props;
 
-    const { electionStopDateTime, bidSubmissionStartDateTime, bidSubmissionStopDateTime, votingStartDateTime, votingStopDateTime, loading } = this.state;
+    const { electionStopDateTime, bidSubmissionStartDateTime, bidSubmissionStopDateTime, votingStartDateTime, votingStopDateTime, eligibleVotersArray, loading } = this.state;
 
     /**
      * Calculate Status - Submit Bid, View Candidates, Cast Your Vote, Your Candidate Of Choice, Results 
@@ -93,7 +95,7 @@ class ElectionProcessBase extends Component {
     } else if (now >= DateTime.fromISO(bidSubmissionStopDateTime) && now < DateTime.fromISO(votingStartDateTime)) {
       process = <ViewCandidates electionId={electionId} />;
     } else if (now >= DateTime.fromISO(votingStartDateTime) && now < DateTime.fromISO(votingStopDateTime)) {
-      process = <CastYourVote electionId={electionId} votingStartDateTime={votingStartDateTime} votingStopDateTime={votingStopDateTime} />;
+      process = <CastYourVote electionId={electionId} votingStartDateTime={votingStartDateTime} votingStopDateTime={votingStopDateTime} eligibleVotersArray={eligibleVotersArray} />;
     } else if (now >= DateTime.fromISO(votingStopDateTime) && now < DateTime.fromISO(electionStopDateTime)) {
       process = <YourCandidateOfChoice electionId={electionId} />;
     } else if (now >= DateTime.fromISO(electionStopDateTime)) {

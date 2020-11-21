@@ -42,6 +42,7 @@ const INITIAL_STATE = {
   bidSubmissionStopDateTime: null,                // When does bid submission stop?
   votingStartDateTime: null,                      // When does voting start?
   votingStopDateTime: null,                       // When does voting stop?
+  eligibleVoters: '',                             // A list of all eligible voters, separated by commas
   featured: false,                                // Should the election be featured on the homepage?
   disabled: false,
 }
@@ -79,10 +80,10 @@ class AddElectionFormBase extends Component {
   onSubmit(event) {
     const { enqueueSnackbar } = this.props;
 
-    const { title, description, electionStartDateTime, electionStopDateTime, bidSubmissionStartDateTime, bidSubmissionStopDateTime, votingStartDateTime, votingStopDateTime, featured } = this.state;
+    const { title, description, electionStartDateTime, electionStopDateTime, bidSubmissionStartDateTime, bidSubmissionStopDateTime, votingStartDateTime, votingStopDateTime, eligibleVoters, featured } = this.state;
 
     const authUser = this.context;
-
+    
     this.setState({ disabled: true });
  
     this.props.firebase
@@ -96,6 +97,8 @@ class AddElectionFormBase extends Component {
         bidSubmissionStopDateTime: bidSubmissionStopDateTime.toISO(),
         votingStartDateTime: votingStartDateTime.toISO(),
         votingStopDateTime: votingStopDateTime.toISO(),
+        eligibleVoters,
+        eligibleVotersArray: eligibleVoters.toLowerCase().split(','),
         featured,
         createdOn: this.props.firebase.getServerTimestamp(),
         createdBy: authUser.uid,
@@ -130,7 +133,7 @@ class AddElectionFormBase extends Component {
   render() {
     const { classes } = this.props;
 
-    const { title, description, electionStartDateTime, electionStopDateTime, bidSubmissionStartDateTime, bidSubmissionStopDateTime, votingStartDateTime, votingStopDateTime, featured, disabled } = this.state;
+    const { title, description, electionStartDateTime, electionStopDateTime, bidSubmissionStartDateTime, bidSubmissionStopDateTime, votingStartDateTime, votingStopDateTime, eligibleVoters, featured, disabled } = this.state;
 
     const disableButton = title === '' ||
                           electionStartDateTime === null ||
@@ -139,11 +142,12 @@ class AddElectionFormBase extends Component {
                           bidSubmissionStopDateTime === null ||
                           votingStartDateTime === null ||
                           votingStopDateTime === null ||
-                          electionStartDateTime >= bidSubmissionStartDateTime ||         // Date of STARTING ELECTION can't be later than date of STARTING BID SUBMISSION
-                          bidSubmissionStartDateTime >= bidSubmissionStopDateTime ||    // Date of STARTING BID SUBMISSION can't be later than date of STOPPING BID SUBMISSION
-                          bidSubmissionStopDateTime >= votingStartDateTime ||           // Date of STOPPING BID SUBMISSION can't be later than date of STARTING VOTING
-                          votingStartDateTime >= votingStopDateTime ||                  // Date of STARTING VOTING can't be later than date of STOPPING VOTING
-                          votingStopDateTime >= electionStopDateTime;                  // Date of STOPPING VOTING can't be later than date of STOPPING ELECTION
+                          electionStartDateTime >= bidSubmissionStartDateTime ||          // Date of STARTING ELECTION can't be later than date of STARTING BID SUBMISSION
+                          bidSubmissionStartDateTime >= bidSubmissionStopDateTime ||      // Date of STARTING BID SUBMISSION can't be later than date of STOPPING BID SUBMISSION
+                          bidSubmissionStopDateTime >= votingStartDateTime ||             // Date of STOPPING BID SUBMISSION can't be later than date of STARTING VOTING
+                          votingStartDateTime >= votingStopDateTime ||                    // Date of STARTING VOTING can't be later than date of STOPPING VOTING
+                          votingStopDateTime >= electionStopDateTime ||                   // Date of STOPPING VOTING can't be later than date of STOPPING ELECTION
+                          eligibleVoters === '';
     
     return(
       <form className={classes.form} onSubmit={(e) => this.onSubmit(e)}>
@@ -270,6 +274,33 @@ class AddElectionFormBase extends Component {
               disabled={disabled}
               showTodayButton
               ampm={false}
+            />
+          </Grid>
+        </Grid>
+
+        <Separator />
+
+        <Typography variant="overline" gutterBottom>
+          <strong>Eligible Voters</strong>
+        </Typography>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id="eligibleVoters"
+              helperText="Insert a list of emails belonging to all the eligible voters separated by a comma ONLY, e.g. a@a.a,b@b.b."
+              label="Eligible Voters (Who can participate in this election?)"
+              margin="normal"
+              name="eligibleVoters"
+              onChange={(e) => this.onChange(e)}
+              required
+              value={eligibleVoters}
+              variant="filled"
+              disabled={disabled}
+              multiline
+              rows={4}
+              placeholder="john@example.com,jane@example.com,james@example.com"
             />
           </Grid>
         </Grid>
