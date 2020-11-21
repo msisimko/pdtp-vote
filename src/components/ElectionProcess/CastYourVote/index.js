@@ -71,7 +71,7 @@ class CastYourVoteBase extends Component {
   }
 
   render() {
-    const { classes, electionId } = this.props;
+    const { classes, electionId, votingStartDateTime, votingStopDateTime } = this.props;
 
     const { teams, loading } = this.state;
 
@@ -89,7 +89,7 @@ class CastYourVoteBase extends Component {
               {loading ? (
                 <Skeleton variant="text" />
               ) : (
-                <CastYourVoteForm electionId={electionId} teams={teams} />
+                <CastYourVoteForm electionId={electionId} votingStartDateTime={votingStartDateTime} votingStopDateTime={votingStopDateTime} teams={teams} />
               )}
             </Grid>
           </Grid>

@@ -89,11 +89,11 @@ class ElectionProcessBase extends Component {
     let process = '';
 
     if (now >= DateTime.fromISO(bidSubmissionStartDateTime) && now < DateTime.fromISO(bidSubmissionStopDateTime)) {
-      process = <SubmitBid electionId={electionId} />;
+      process = <SubmitBid electionId={electionId} bidSubmissionStartDateTime={bidSubmissionStartDateTime} bidSubmissionStopDateTime={bidSubmissionStopDateTime} />;
     } else if (now >= DateTime.fromISO(bidSubmissionStopDateTime) && now < DateTime.fromISO(votingStartDateTime)) {
       process = <ViewCandidates electionId={electionId} />;
     } else if (now >= DateTime.fromISO(votingStartDateTime) && now < DateTime.fromISO(votingStopDateTime)) {
-      process = <CastYourVote electionId={electionId} />;
+      process = <CastYourVote electionId={electionId} votingStartDateTime={votingStartDateTime} votingStopDateTime={votingStopDateTime} />;
     } else if (now >= DateTime.fromISO(votingStopDateTime) && now < DateTime.fromISO(electionStopDateTime)) {
       process = <YourCandidateOfChoice electionId={electionId} />;
     } else if (now >= DateTime.fromISO(electionStopDateTime)) {

@@ -19,6 +19,8 @@ import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import { DateTime } from "luxon";
+
 import { withSnackbar } from 'notistack';
 
 import NumberFormat from 'react-number-format';
@@ -103,40 +105,67 @@ class SubmitBidFormBase extends Component {
   }
 
   onSubmit(event) {
-    const { electionId, enqueueSnackbar } = this.props;
+    const { electionId, enqueueSnackbar, bidSubmissionStartDateTime, bidSubmissionStopDateTime } = this.props;
 
     const { candidateName, candidateAge, candidateGender, candidateOrganization, candidateLocation, runningMateName, runningMateAge, runningMateGender, runningMateOrganization, runningMateLocation, slogan } = this.state;
 
     const authUser = this.context;
 
     this.setState({ disabled: true });
-    
-    this.props.firebase
-      .candidates(electionId)
-      .doc(authUser.uid)
-      .set({
-        candidateName, 
-        candidateAge: parseFloat(candidateAge), 
-        candidateGender, 
-        candidateOrganization, 
-        candidateLocation, 
-        runningMateName, 
-        runningMateAge: parseFloat(runningMateAge), 
-        runningMateGender, 
-        runningMateOrganization, 
-        runningMateLocation,
-        slogan,
-        createdOn: this.props.firebase.getServerTimestamp(),
-        createdBy: authUser.uid,
-        createdByName: authUser.displayName,
-      }, { merge: true })
-      .then(() => {
-        enqueueSnackbar('Your candidacy bid has been submitted successfully.', { variant: 'success', onClose: this.handleSuccess });
-      })
-      .catch(error => {
-        enqueueSnackbar(error.message, { variant: 'error', onClose: this.handleError });
-      });
-    
+
+    if( 
+        DateTime.local() >= DateTime.fromISO(bidSubmissionStartDateTime) 
+        && 
+        DateTime.local() < DateTime.fromISO(bidSubmissionStopDateTime) 
+      ) {
+      /** 
+       * If current time (NOW) is:
+       *  - Greater than or equal to Bid Submission START DateTime
+       *  - Less than Bid Submission STOP DateTime
+       * 
+       */
+
+      this.props.firebase
+        .candidates(electionId)
+        .doc(authUser.uid)
+        .set({
+          candidateName, 
+          candidateAge: parseFloat(candidateAge), 
+          candidateGender, 
+          candidateOrganization, 
+          candidateLocation, 
+          runningMateName, 
+          runningMateAge: parseFloat(runningMateAge), 
+          runningMateGender, 
+          runningMateOrganization, 
+          runningMateLocation,
+          slogan,
+          createdOn: this.props.firebase.getServerTimestamp(),
+          createdBy: authUser.uid,
+          createdByName: authUser.displayName,
+        }, { merge: true })
+        .then(() => {
+          enqueueSnackbar('Your candidacy bid has been submitted successfully.', { variant: 'success', onClose: this.handleSuccess });
+        })
+        .catch(error => {
+          enqueueSnackbar(error.message, { variant: 'error', onClose: this.handleError });
+        });
+      
+    } else if ( 
+                DateTime.local() >= DateTime.fromISO(bidSubmissionStopDateTime) 
+                || 
+                DateTime.local() < DateTime.fromISO(bidSubmissionStartDateTime) 
+              ) {
+      /** 
+       * If current time (NOW) is:
+       *  - Great than or equal to Bid Submission STOP DateTime
+       *  - Less than Bid Submission START DateTime
+       * 
+       */
+      
+      enqueueSnackbar('You cannot submit your candidacy bid at this time.', { variant: 'error' });
+
+    }
 
     event.preventDefault();
   }

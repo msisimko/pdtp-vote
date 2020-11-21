@@ -17,6 +17,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import PersonIcon from '@material-ui/icons/Person';
 
+import { DateTime } from "luxon";
+
 import { withSnackbar } from 'notistack';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -85,7 +87,7 @@ class CastYourVoteFormBase extends Component {
   }
 
   onSubmit(event) {
-    const { electionId, teams, enqueueSnackbar } = this.props;
+    const { enqueueSnackbar, electionId, votingStartDateTime, votingStopDateTime, teams } = this.props;
 
     const authUser = this.context;
 
@@ -104,26 +106,53 @@ class CastYourVoteFormBase extends Component {
      */
     let team = teams.filter(this.getTeamSelected);
     
-    this.props.firebase
-      .votes(electionId)
-      .doc(authUser.uid)
-      .set({
-        uuid,
-        candidate: team[0].id,
-        candidateName: team[0].candidateName,
-        candidateSlogan: team[0].slogan,
-        createdOn: this.props.firebase.getServerTimestamp(),
-        createdBy: authUser.uid,
-        createdByName: authUser.displayName,
-        createdByEmail: authUser.email,
-      }, { merge: true })
-      .then(() => {
-        enqueueSnackbar('Your vote has been cast successfully.', { variant: 'success', onClose: this.handleSuccess });
-      })
-      .catch(error => {
-        enqueueSnackbar(error.message, { variant: 'error', onClose: this.handleError });
-      });
-    
+    if( 
+      DateTime.local() >= DateTime.fromISO(votingStartDateTime) 
+      && 
+      DateTime.local() < DateTime.fromISO(votingStopDateTime) 
+    ) {
+      /** 
+       * If current time (NOW) is:
+       *  - Greater than or equal to Voting START DateTime
+       *  - Less than Voting STOP DateTime
+       * 
+       */
+
+      this.props.firebase
+        .votes(electionId)
+        .doc(authUser.uid)
+        .set({
+          uuid,
+          candidate: team[0].id,
+          candidateName: team[0].candidateName,
+          candidateSlogan: team[0].slogan,
+          createdOn: this.props.firebase.getServerTimestamp(),
+          createdBy: authUser.uid,
+          createdByName: authUser.displayName,
+          createdByEmail: authUser.email,
+        }, { merge: true })
+        .then(() => {
+          enqueueSnackbar('Your vote has been cast successfully.', { variant: 'success', onClose: this.handleSuccess });
+        })
+        .catch(error => {
+          enqueueSnackbar(error.message, { variant: 'error', onClose: this.handleError });
+        });
+
+    } else if ( 
+      DateTime.local() >= DateTime.fromISO(votingStopDateTime) 
+      || 
+      DateTime.local() < DateTime.fromISO(votingStartDateTime) 
+    ) {
+      /** 
+       * If current time (NOW) is:
+       *  - Great than or equal to Voting STOP DateTime
+       *  - Less than Voting START DateTime
+       * 
+       */
+
+      enqueueSnackbar('You cannot cast your vote at this time.', { variant: 'error' });
+
+    }
 
     event.preventDefault();
   }
