@@ -113,58 +113,67 @@ class SubmitBidFormBase extends Component {
 
     this.setState({ disabled: true });
 
-    if( 
-        DateTime.local() >= DateTime.fromISO(bidSubmissionStartDateTime) 
-        && 
-        DateTime.local() < DateTime.fromISO(bidSubmissionStopDateTime) 
-      ) {
-      /** 
-       * If current time (NOW) is:
-       *  - Greater than or equal to Bid Submission START DateTime
-       *  - Less than Bid Submission STOP DateTime
-       * 
-       */
+    /**
+     * Check if slogan is less than 100 characters
+     */
+    if (slogan.length <= 100) {
 
-      this.props.firebase
-        .candidates(electionId)
-        .doc(authUser.uid)
-        .set({
-          candidateName, 
-          candidateAge: parseFloat(candidateAge), 
-          candidateGender, 
-          candidateOrganization, 
-          candidateLocation, 
-          runningMateName, 
-          runningMateAge: parseFloat(runningMateAge), 
-          runningMateGender, 
-          runningMateOrganization, 
-          runningMateLocation,
-          slogan,
-          createdOn: this.props.firebase.getServerTimestamp(),
-          createdBy: authUser.uid,
-          createdByName: authUser.displayName,
-        }, { merge: true })
-        .then(() => {
-          enqueueSnackbar('Your candidacy bid has been submitted successfully.', { variant: 'success', onClose: this.handleSuccess });
-        })
-        .catch(error => {
-          enqueueSnackbar(error.message, { variant: 'error', onClose: this.handleError });
-        });
-      
-    } else if ( 
-                DateTime.local() >= DateTime.fromISO(bidSubmissionStopDateTime) 
-                || 
-                DateTime.local() < DateTime.fromISO(bidSubmissionStartDateTime) 
-              ) {
-      /** 
-       * If current time (NOW) is:
-       *  - Great than or equal to Bid Submission STOP DateTime
-       *  - Less than Bid Submission START DateTime
-       * 
-       */
-      
-      enqueueSnackbar('You cannot submit your candidacy bid at this time.', { variant: 'error' });
+      if( 
+          DateTime.local() >= DateTime.fromISO(bidSubmissionStartDateTime) 
+          && 
+          DateTime.local() < DateTime.fromISO(bidSubmissionStopDateTime) 
+        ) {
+        /** 
+         * If current time (NOW) is:
+         *  - Greater than or equal to Bid Submission START DateTime
+         *  - Less than Bid Submission STOP DateTime
+         * 
+         */
 
+        this.props.firebase
+          .candidates(electionId)
+          .doc(authUser.uid)
+          .set({
+            candidateName, 
+            candidateAge: parseFloat(candidateAge), 
+            candidateGender, 
+            candidateOrganization, 
+            candidateLocation, 
+            runningMateName, 
+            runningMateAge: parseFloat(runningMateAge), 
+            runningMateGender, 
+            runningMateOrganization, 
+            runningMateLocation,
+            slogan,
+            createdOn: this.props.firebase.getServerTimestamp(),
+            createdBy: authUser.uid,
+            createdByName: authUser.displayName,
+          }, { merge: true })
+          .then(() => {
+            enqueueSnackbar('Your candidacy bid has been submitted successfully.', { variant: 'success', onClose: this.handleSuccess });
+          })
+          .catch(error => {
+            enqueueSnackbar(error.message, { variant: 'error', onClose: this.handleError });
+          });
+        
+      } else if ( 
+                  DateTime.local() >= DateTime.fromISO(bidSubmissionStopDateTime) 
+                  || 
+                  DateTime.local() < DateTime.fromISO(bidSubmissionStartDateTime) 
+                ) {
+        /** 
+         * If current time (NOW) is:
+         *  - Great than or equal to Bid Submission STOP DateTime
+         *  - Less than Bid Submission START DateTime
+         * 
+         */
+        
+        enqueueSnackbar('You cannot submit your candidacy bid at this time.', { variant: 'error' });
+
+      }
+
+    } else {
+      enqueueSnackbar('Your word count for Team Slogan has exceded the limit of 100 characters.', { variant: 'error', onClose: this.handleError });
     }
 
     event.preventDefault();
@@ -201,6 +210,12 @@ class SubmitBidFormBase extends Component {
                           runningMateGender === '' ||
                           runningMateOrganization === '' ||
                           runningMateLocation === '';
+    
+    /**
+     * Check word count of Team Slogan, 
+     * if greater than 100 set to error
+     */
+    const sloganError = slogan.length > 100 ? true : false;
     
     return(
       <form className={classes.form} onSubmit={(e) => this.onSubmit(e)}>
@@ -402,6 +417,7 @@ class SubmitBidFormBase extends Component {
           <Grid item xs={12}>
             <TextField
               fullWidth
+              helperText={sloganError ? 'Your word count has exceded the limit of 100 characters.' : 'Your slogan in 100 characters or less.'}
               id="slogan"
               label="Campaign Slogan"
               margin="normal"
@@ -411,8 +427,9 @@ class SubmitBidFormBase extends Component {
               variant="filled"
               disabled={disabled}
               multiline
-              rows={4}
+              rows={2}
               placeholder="Enter your team slogan if you have one..."
+              error={sloganError}
             />
           </Grid>
         </Grid>
@@ -424,7 +441,7 @@ class SubmitBidFormBase extends Component {
           size="large"
           type="submit"
           variant="contained"
-          disabled={disabled || disableButton }
+          disabled={disabled || disableButton || sloganError}
         >
           Submit Candidacy Bid
         </Button>
