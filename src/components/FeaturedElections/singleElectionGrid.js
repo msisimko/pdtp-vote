@@ -55,9 +55,17 @@ class SingleElectionGrid extends Component {
         <Grid item md={6} xs={12}>
           
           <Paper elevation={0} square>
-            <Box p={1} textAlign="center" color="primary.main">
-              <Typography variant="overline" gutterBottom>
+            <Box p={3} textAlign="center" color="primary.main">
+              <Typography variant="h5" gutterBottom>
                 <strong>{election.title}</strong>
+              </Typography>
+            </Box>
+          </Paper>
+
+          <Paper elevation={0} square>
+            <Box p={3} textAlign="center" color={status.color}>
+              <Typography variant="overline" gutterBottom>
+                <strong>{status.message}</strong>
               </Typography>
             </Box>
           </Paper>
@@ -66,16 +74,8 @@ class SingleElectionGrid extends Component {
           <ViewElection electionId={election.id} />
 
           <Paper elevation={0} square>
-            <Box p={1} textAlign="center" color={status.color}>
-              <Typography variant="overline" gutterBottom>
-                <strong>{status.message}</strong>
-              </Typography>
-            </Box>
-          </Paper>
-
-          <Paper elevation={0} square>
-            <Box p={1} textAlign="center">
-              <Button size="large" component={Link} to={`${ROUTES.ELECTION_VIEW}/${election.id}`}>Click To View</Button>
+            <Box p={3} textAlign="center">
+              <Button component={Link} to={`${ROUTES.ELECTION_VIEW}/${election.id}`}>Click To View</Button>
             </Box>
           </Paper>
 
