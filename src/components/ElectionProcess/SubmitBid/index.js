@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { withSnackbar } from 'notistack';
  
-import { withFirebase } from '../../../../firebase';
+import { withFirebase } from '../../../firebase';
 
 const styles = theme => ({
   heading: {

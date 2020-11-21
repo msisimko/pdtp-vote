@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link as RouterLink } from "react-router-dom";
 
-import { ElectionProcess, ViewElection } from '../../../components/Elections';
+import { ViewElection } from '../../../components/Elections';
+import { ElectionProcess } from '../../../components/ElectionProcess';
 import { Separator } from '../../../components/Separator';
 import { MainSidebar as Sidebar } from '../../../components/Sidebars';
 

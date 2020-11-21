@@ -21,9 +21,9 @@ import { withSnackbar } from 'notistack';
 
 import { v4 as uuidv4 } from 'uuid';
  
-import { withFirebase } from '../../../../firebase';
+import { withFirebase } from '../../../firebase';
 
-import { AuthUserContext } from '../../../../session';
+import { AuthUserContext } from '../../../session';
 
 const styles = theme => ({
   form: {

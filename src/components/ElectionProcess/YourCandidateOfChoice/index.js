@@ -18,9 +18,9 @@ import Skeleton from '@material-ui/lab/Skeleton';
 
 import { withSnackbar } from 'notistack';
  
-import { withFirebase } from '../../../../firebase';
+import { withFirebase } from '../../../firebase';
 
-import { AuthUserContext } from '../../../../session';
+import { AuthUserContext } from '../../../session';
 
 const styles = theme => ({
   heading: {

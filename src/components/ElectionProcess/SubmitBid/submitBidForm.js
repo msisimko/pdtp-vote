@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
 
-import { Separator } from '../../../Separator';
+import { Separator } from '../../Separator';
 
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -23,9 +23,9 @@ import { withSnackbar } from 'notistack';
 
 import NumberFormat from 'react-number-format';
  
-import { withFirebase } from '../../../../firebase';
+import { withFirebase } from '../../../firebase';
 
-import { AuthUserContext } from '../../../../session';
+import { AuthUserContext } from '../../../session';
 
 const styles = theme => ({
   form: {
