@@ -56,6 +56,7 @@ class CastYourVoteBase extends Component {
           teams.push({
             id: doc.id,
             candidateName: doc.data().candidateName,
+            runningMateName: doc.data().runningMateName,
             slogan: doc.data().slogan,
           });
         });
