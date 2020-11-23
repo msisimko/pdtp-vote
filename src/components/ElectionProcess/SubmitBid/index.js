@@ -30,7 +30,7 @@ const styles = theme => ({
 
 class SubmitBidBase extends Component {
   render() {
-    const { classes, electionId, bidSubmissionStartDateTime, bidSubmissionStopDateTime } = this.props;
+    const { classes, electionId, bidSubmissionStartDateTime, bidSubmissionStopDateTime, eligibleVotersArray } = this.props;
 
     return(
       <Accordion defaultExpanded elevation={0} square>
@@ -44,7 +44,7 @@ class SubmitBidBase extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               
-              <SubmitBidForm electionId={electionId} bidSubmissionStartDateTime={bidSubmissionStartDateTime} bidSubmissionStopDateTime={bidSubmissionStopDateTime} />
+              <SubmitBidForm electionId={electionId} bidSubmissionStartDateTime={bidSubmissionStartDateTime} bidSubmissionStopDateTime={bidSubmissionStopDateTime} eligibleVotersArray={eligibleVotersArray} />
 
             </Grid>
           </Grid>
