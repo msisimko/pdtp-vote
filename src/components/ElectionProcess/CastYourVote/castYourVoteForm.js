@@ -55,7 +55,6 @@ class CastYourVoteFormBase extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.getTeamSelected = this.getTeamSelected.bind(this);
-    this.handleSuccess = this.handleSuccess.bind(this);
     this.handleError = this.handleError.bind(this);
   }
 
@@ -71,7 +70,6 @@ class CastYourVoteFormBase extends Component {
         if (doc.exists) {
           this.setState({
             candidate: doc.data().candidate,
-            disabled: false,
           })
         } else {
           this.setState({ disabled: false });
@@ -136,7 +134,7 @@ class CastYourVoteFormBase extends Component {
             createdByEmail: authUser.email,
           }, { merge: true })
           .then(() => {
-            enqueueSnackbar('Your vote has been cast successfully.', { variant: 'success', onClose: this.handleSuccess });
+            enqueueSnackbar(`Your vote for ${team[0].candidateName} has been cast successfully.`, { variant: 'success' });
           })
           .catch(error => {
             enqueueSnackbar(error.message, { variant: 'error', onClose: this.handleError });
@@ -175,14 +173,6 @@ class CastYourVoteFormBase extends Component {
     } 
   
     return false;
-  }
-
-  handleSuccess(event, reason) {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    this.setState({ disabled: false });
   }
 
   handleError(event, reason) {
