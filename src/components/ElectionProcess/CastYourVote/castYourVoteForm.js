@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'recompose';
 
 import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -231,9 +232,16 @@ class CastYourVoteFormBase extends Component {
                         </Tooltip>
                       </ListItemIcon>
                       <ListItemAvatar>
-                        <Avatar alt={team.candidateName}>
-                          <PersonIcon />
-                        </Avatar>
+                        <Box px={3}>
+                          <AvatarGroup max={4}>
+                              <Avatar className={classes.avatar}>
+                                <PersonIcon style={{ fontSize: 60 }} />
+                              </Avatar>
+                              <Avatar className={classes.avatar}>
+                                <PersonIcon style={{ fontSize: 60 }} />
+                              </Avatar>
+                          </AvatarGroup>
+                        </Box>
                       </ListItemAvatar>
                       <ListItemText id={team.id} primary={team.candidateName} secondary={team.runningMateName} />
                       <ListItemSecondaryAction>
