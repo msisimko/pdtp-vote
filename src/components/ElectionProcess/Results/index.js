@@ -5,6 +5,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -95,6 +96,7 @@ class ResultsBase extends Component {
             id: doc.id,
             candidate: doc.data().candidate,
             candidateName: doc.data().candidateName,
+            runningMateName: doc.data().runningMateName,
             uuid: doc.data().uuid,
           });
         });
@@ -130,6 +132,7 @@ class ResultsBase extends Component {
       results.push({
         id: key,                                                  // Candidate's ID
         candidateName: scores[key][0]['candidateName'],           // Candidate's name
+        runningMateName: scores[key][0]['runningMateName'],       // Running Mate's name
         totalVotes: Object.size(scores[key]),                     // Candidate's total votes
         voters: scores[key],                                      // Voters who voted for candidate
       })
@@ -163,11 +166,18 @@ class ResultsBase extends Component {
                       {results.map((result) => (
                         <ListItem key={result.id}>
                           <ListItemAvatar>
-                            <Avatar alt={result.candidateName}>
-                              <PersonIcon />
-                            </Avatar>
+                            <Box px={3}>
+                              <AvatarGroup max={4}>
+                                  <Avatar className={classes.avatar}>
+                                    <PersonIcon style={{ fontSize: 60 }} />
+                                  </Avatar>
+                                  <Avatar className={classes.avatar}>
+                                    <PersonIcon style={{ fontSize: 60 }} />
+                                  </Avatar>
+                              </AvatarGroup>
+                            </Box>
                           </ListItemAvatar>
-                          <ListItemText id={result.id} primary={result.candidateName} secondary={result.id} />
+                          <ListItemText id={result.id} primary={result.candidateName} secondary={result.runningMateName} />
                           <ListItemSecondaryAction>
                             <Typography variant="body1">{result.totalVotes}</Typography>
                           </ListItemSecondaryAction>

@@ -5,6 +5,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -40,7 +41,8 @@ const INITIAL_STATE = {
   uuid: '',
   candidate: '',
   candidateName: '',
-  candidateSlogan: '',
+  runningMateName: '',
+  slogan: '',
   loading: true,
 }
 
@@ -67,7 +69,8 @@ class YourCandidateOfChoiceBase extends Component {
             uuid: doc.data().uuid,
             candidate: doc.data().candidate,
             candidateName: doc.data().candidateName,
-            candidateSlogan: doc.data().candidateSlogan,
+            runningMateName: doc.data().runningMateName,
+            slogan: doc.data().slogan,
             loading: false,
           })
         } else {
@@ -82,7 +85,7 @@ class YourCandidateOfChoiceBase extends Component {
   render() {
     const { classes } = this.props;
 
-    const { uuid, candidate, candidateName, candidateSlogan, loading } = this.state;
+    const { uuid, candidate, candidateName, runningMateName, slogan, loading } = this.state;
 
     return(
       <Accordion defaultExpanded elevation={0} square>
@@ -111,13 +114,19 @@ class YourCandidateOfChoiceBase extends Component {
                           
                         <Box display="flex" alignItems="center">
                           <Box p={3}>
-                            <Avatar className={classes.avatar}>
-                              <PersonIcon style={{ fontSize: 60 }} />
-                            </Avatar>
+                            <AvatarGroup max={4}>
+                              <Avatar className={classes.avatar}>
+                                <PersonIcon style={{ fontSize: 60 }} />
+                              </Avatar>
+                              <Avatar className={classes.avatar}>
+                                <PersonIcon style={{ fontSize: 60 }} />
+                              </Avatar>
+                            </AvatarGroup>
                           </Box>
                           <Box p={3}>
                             <Typography variant="h6" gutterBottom>{candidateName}</Typography>
-                            <Typography variant="subtitle1" gutterBottom>{candidateSlogan}</Typography>
+                            <Typography variant="body1" gutterBottom>{runningMateName}</Typography>
+                            <Typography variant="subtitle1" gutterBottom>{slogan}</Typography>
                           </Box>
                         </Box>
 
