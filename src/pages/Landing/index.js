@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import { SignInLink } from '../../components/SignIn';
+import { SignUpLink } from '../../components/SignUp';
+
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import SvgIcon from '@material-ui/core/SvgIcon';
@@ -51,7 +54,16 @@ class Landing extends Component {
           </Box>
         </Paper>
 
-
+        <Paper elevation={0} square>
+          <Box display="flex" justifyContent="center">
+            <Box p={2} color="text.secondary">
+              <SignInLink />
+            </Box>
+            <Box p={2} color="text.secondary">
+              <SignUpLink />
+            </Box>
+          </Box>
+        </Paper>
 
         <Paper elevation={0} square>
           <Box p={3} display="flex" justifyContent="center" color="text.disabled">
