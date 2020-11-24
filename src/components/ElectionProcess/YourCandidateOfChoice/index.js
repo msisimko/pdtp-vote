@@ -126,7 +126,9 @@ class YourCandidateOfChoiceBase extends Component {
                           <Box p={3}>
                             <Typography variant="h6" gutterBottom>{candidateName}</Typography>
                             <Typography variant="body1" gutterBottom>{runningMateName}</Typography>
-                            <Typography variant="subtitle1" gutterBottom>{slogan}</Typography>
+                            <Box color="text.secondary">
+                              <Typography variant="caption" gutterBottom>{slogan}</Typography>
+                            </Box>
                           </Box>
                         </Box>
 
